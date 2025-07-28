@@ -1,0 +1,917 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdenX: Future Ready Festival 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 50%, #7c3aed 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="85" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="85" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(0, 245, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.5)); }
+        }
+
+        .hero-text .subtitle {
+            font-size: 2rem;
+            color: #ff00ff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .event-details {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .event-details h3 {
+            color: #00f5ff;
+            margin-bottom: 15px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .floating-elements {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            animation: floatElement 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20px;
+            left: 50px;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 100px;
+            right: 30px;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 100px;
+            left: 20px;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 50px;
+            right: 60px;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatElement {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-5deg); }
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            background: #1e1b4b;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .countdown h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #00f5ff;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background: linear-gradient(45deg, #3730a3, #7c3aed);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 120px;
+            border: 2px solid #00f5ff;
+        }
+
+        .time-unit .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff00ff;
+        }
+
+        .time-unit .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Challenges Section */
+        .challenges {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .challenges h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #1e1b4b, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            border-color: #00f5ff;
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.2);
+        }
+
+        .challenge-number {
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .challenge-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1e1b4b;
+        }
+
+        .challenge-info {
+            margin-bottom: 20px;
+            color: #64748b;
+        }
+
+        .challenge-info p {
+            margin-bottom: 5px;
+        }
+
+        .register-btn {
+            background: linear-gradient(45deg, #1e1b4b, #7c3aed);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            transform: scale(1.05);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #1e1b4b, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border-left: 5px solid #00f5ff;
+        }
+
+        .testimonial-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: #1e1b4b;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Partners Section */
+        .partners {
+            background: #1e1b4b;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .partners h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #00f5ff;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 150px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1e1b4b;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
+            color: white;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #00f5ff;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            color: #e2e8f0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            padding: 3px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.3);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #00f5ff;
+        }
+
+        .gallery-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff00ff;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            color: #00f5ff;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timer {
+                gap: 15px;
+            }
+
+            .time-unit {
+                min-width: 80px;
+                padding: 15px;
+            }
+
+            .time-unit .number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>EDEN X</h1>
+                <div class="subtitle">Future Ready Festival</div>
+                <div class="event-details">
+                    <h3>📅 Date: Saturday, 6 September 2025</h3>
+                    <h3>📍 Venue: Africa Skills College, George</h3>
+                    <h3>👥 Expected: 600+ Learners (Grades 3-12)</h3>
+                </div>
+                <a href="#challenges" class="cta-button">Explore Challenges</a>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="floating-element">🤖 Robotics</div>
+                    <div class="floating-element">💻 Coding</div>
+                    <div class="floating-element">🚁 Drones</div>
+                    <div class="floating-element">🚀 Innovation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Timer -->
+    <section class="countdown">
+        <div class="container">
+            <h2>Event Countdown</h2>
+            <div class="timer" id="countdown">
+                <div class="time-unit">
+                    <div class="number" id="days">00</div>
+                    <div class="label">Days</div>
+                </div>
+                <div class="time-unit">
+                    <div class="number" id="hours">00</div>
+                    <div class="label">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <div class="number" id="minutes">00</div>
+                    <div class="label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <div class="number" id="seconds">00</div>
+                    <div class="label">Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges Section -->
+    <section class="challenges" id="challenges">
+        <div class="container">
+            <h2>Competition Challenges</h2>
+            <div class="challenges-grid">
+                <div class="challenge-card">
+                    <div class="challenge-number">01.</div>
+                    <h3 class="challenge-title">Innovation Challenge (Micro:bit)</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> Grades 5-9</p>
+                        <p><strong>Team Size:</strong> 4 Learners per Team</p>
+                        <p>Unleash creativity with micro:bit technology and innovative problem-solving</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-number">02.</div>
+                    <h3 class="challenge-title">goIT Challenge</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> Grades 8-9</p>
+                        <p><strong>Team Size:</strong> 4 Learners per Team</p>
+                        <p>Digital literacy and computational thinking challenge</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-number">03.</div>
+                    <h3 class="challenge-title">Drone Challenge</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> Grades 10-12</p>
+                        <p><strong>Team Size:</strong> 4 Learners per Team</p>
+                        <p>Navigate the future with drone programming and flight challenges</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-number">04.</div>
+                    <h3 class="challenge-title">Unplugged Coding</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> Grades 3-4</p>
+                        <p><strong>Team Size:</strong> 4 Learners per Team</p>
+                        <p>Learn coding concepts without computers through fun activities</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-number">05.</div>
+                    <h3 class="challenge-title">Spike Prime Challenge (FLL)</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> Grades 6-10</p>
+                        <p><strong>Team Size:</strong> 4 Learners per Team</p>
+                        <p>LEGO robotics and engineering challenge with real-world missions</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+
+                <div class="challenge-card">
+                    <div class="challenge-number">06.</div>
+                    <h3 class="challenge-title">Tech/Career Expo</h3>
+                    <div class="challenge-info">
+                        <p><strong>Who can register?</strong> HEI/Service Providers/Publishers</p>
+                        <p><strong>Purpose:</strong> Showcase opportunities and careers</p>
+                        <p>Connect with future innovators and showcase your organization</p>
+                    </div>
+                    <a href="#" class="register-btn">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div class="container">
+            <h2>Previous Festival Highlights</h2>
+            <p class="gallery-subtitle">Celebrating innovation, creativity, and the future-ready minds of tomorrow</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/award-ceremony.jpg" alt="Students receiving awards at previous EdenX Festival" style="background: linear-gradient(45deg, #3B82F6, #8B5CF6); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Award Ceremonies</h4>
+                        <p>Recognizing outstanding achievements in coding and robotics</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/robot-project.jpg" alt="Creative student robot projects and innovations" style="background: linear-gradient(45deg, #10B981, #06D6A0); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Creative Robotics</h4>
+                        <p>Students showcase amazing DIY robots like "Mr. Sweet"</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/drone-challenge.jpg" alt="Drone flying through obstacle course" style="background: linear-gradient(45deg, #F59E0B, #EF4444); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Drone Challenges</h4>
+                        <p>Precision flying through colorful obstacle courses</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/microbit-demo.jpg" alt="Students presenting micro:bit innovations" style="background: linear-gradient(45deg, #8B5CF6, #EC4899); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Micro:bit Innovation</h4>
+                        <p>Young programmers bringing ideas to life with code</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/team-collaboration.jpg" alt="Students working together on challenges" style="background: linear-gradient(45deg, #06D6A0, #3B82F6); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Team Collaboration</h4>
+                        <p>Students working together to solve complex challenges</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img class="gallery-image" src="path/to/unplugged-coding.jpg" alt="Unplugged coding activities with younger students" style="background: linear-gradient(45deg, #EF4444, #F59E0B); object-fit: cover;">
+                    <div class="gallery-overlay">
+                        <h4>Unplugged Coding</h4>
+                        <p>Learning programming concepts through creative activities</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-stats">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Students Participated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Schools Represented</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Projects Showcased</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Partner Organizations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Participants Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "The EdenX Festival opened my eyes to the endless possibilities in technology. Building our robot taught me that with creativity and teamwork, we can solve any problem!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h4>Aisha M.</h4>
+                            <p>Grade 9 Student, Innovation Challenge Winner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Watching these young minds tackle complex coding challenges reminds me why I became an educator. This festival truly prepares students for the digital future."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">T</div>
+                        <div class="author-info">
+                            <h4>Mrs. Thompson</h4>
+                            <p>Computer Science Teacher</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "The drone challenge was incredible! Learning to program flight paths and navigate obstacles made me realize I want to study aerospace engineering."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Michael K.</h4>
+                            <p>Grade 11 Student, Drone Challenge Participant</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="container">
+            <h2>Our Partners</h2>
+            <div class="partner-logos">
+                <div class="partner-logo">Western Cape Government</div>
+                <div class="partner-logo">Africa Skills</div>
+                <div class="partner-logo">CTSC</div>
+                <div class="partner-logo">Sakhikamva</div>
+                <div class="partner-logo">EduNova</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📧 info@edenx-festival.co.za</p>
+                <p>📞 +27 (0)44 123 4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Event Location</h3>
+                <p>Africa Skills College</p>
+                <p>George, Western Cape</p>
+                <p>South Africa</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>🐦 @EdenXFestival</p>
+                <p>📘 EdenX Future Ready Festival</p>
+                <p>📷 @edenxfestival</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #334155;">
+            <p>&copy; 2025 EdenX: Future Ready Festival. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('September 6, 2025 08:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<h2>Event is Live!</h2>';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add interactive hover effects to challenge cards
+        document.querySelectorAll('.challenge-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.background = 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.background = 'white';
+            });
+        });
+    </script>
+</body>
+</html>
