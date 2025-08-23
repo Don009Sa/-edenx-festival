@@ -140,41 +140,41 @@
         }
 
         .floating-element:nth-child(1) {
-            top: 20px;
-            left: 50px;
+            top: 30px;
+            left: 40px;
             animation-delay: 0s;
         }
 
         .floating-element:nth-child(2) {
-            top: 45%;
-            left: 45%;
-            transform: translate(-50%, -50%);
+            top: 50px;
+            right: 30px;
             animation-delay: 1s;
             background: linear-gradient(45deg, #10B981, #06D6A0);
         }
 
         .floating-element:nth-child(3) {
-            bottom: 140px;
-            left: 15px;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
             animation-delay: 2s;
         }
 
         .floating-element:nth-child(4) {
-            bottom: 80px;
-            right: 50px;
+            bottom: 50px;
+            right: 40px;
             animation-delay: 3s;
         }
 
         .floating-element:nth-child(5) {
-            top: 80px;
-            right: 20px;
+            bottom: 80px;
+            left: 60px;
             animation-delay: 4s;
         }
 
         .floating-element:nth-child(6) {
-            top: 200px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            right: 25px;
+            transform: translateY(-50%);
             animation-delay: 5s;
             background: linear-gradient(45deg, #00e5ff, #e91e63);
         }
@@ -649,9 +649,21 @@
         }
 
         .partner-logo {
-            font-size: 4rem;
+            height: 80px;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .partner-logo img {
+            max-height: 80px;
+            max-width: 200px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .partner-card h3 {
@@ -733,14 +745,22 @@
             }
 
             .floating-elements {
-                width: 400px;
-                height: 400px;
+                width: 350px;
+                height: 350px;
             }
 
             .floating-element {
                 font-size: 0.75rem;
                 padding: 12px;
             }
+
+            /* Adjust mobile positions for better spacing */
+            .floating-element:nth-child(1) { top: 20px; left: 25px; }
+            .floating-element:nth-child(2) { top: 40px; right: 20px; }
+            .floating-element:nth-child(3) { top: 45%; left: 15px; }
+            .floating-element:nth-child(4) { bottom: 40px; right: 25px; }
+            .floating-element:nth-child(5) { bottom: 60px; left: 40px; }
+            .floating-element:nth-child(6) { top: 45%; right: 20px; }
 
             .partners-grid {
                 grid-template-columns: 1fr;
@@ -752,7 +772,13 @@
             }
 
             .partner-logo {
-                font-size: 3rem;
+                height: 60px;
+                margin-bottom: 15px;
+            }
+
+            .partner-logo img {
+                max-height: 60px;
+                max-width: 150px;
             }
         }
     </style>
@@ -1172,32 +1198,44 @@
             <p class="partners-subtitle">Together, building the future of education and innovation</p>
             <div class="partners-grid">
                 <a href="https://africaskills.co.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">🏫</div>
+                    <div class="partner-logo">
+                        <img src="images/Africa skills_Logo_blue and green.png" alt="Africa Skills College Logo" />
+                    </div>
                     <h3>Africa Skills College</h3>
                     <p>Host Venue & Training Partner</p>
                 </a>
                 <a href="https://www.ctsc.org.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">🔬</div>
+                    <div class="partner-logo">
+                        <img src="images/CTSC.png" alt="Cape Town Science Centre Logo" />
+                    </div>
                     <h3>Cape Town Science Centre</h3>
                     <p>STEM Education & Innovation</p>
                 </a>
                 <a href="https://sakhikamva.org.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">🌟</div>
+                    <div class="partner-logo">
+                        <img src="images/Sakhikamva.png" alt="Sakhikamva Logo" />
+                    </div>
                     <h3>Sakhikamva</h3>
                     <p>Community Development</p>
                 </a>
                 <a href="https://edunova.co.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">💡</div>
+                    <div class="partner-logo">
+                        <img src="images/logo_edunova_logo.png" alt="EduNova Logo" />
+                    </div>
                     <h3>EduNova</h3>
                     <p>Educational Innovation</p>
                 </a>
                 <a href="https://www.westerncape.gov.za/dept/edat" class="partner-card" target="_blank">
-                    <div class="partner-logo">🏛️</div>
+                    <div class="partner-logo">
+                        <img src="images/DEDAT.png" alt="Western Cape DEDAT Logo" />
+                    </div>
                     <h3>Western Cape Department</h3>
                     <p>Economic Development & Tourism</p>
                 </a>
                 <a href="https://suff.org.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">🚀</div>
+                    <div class="partner-logo">
+                        <img src="images/SURF LOGO.jpeg" alt="SUFF Academy Logo" />
+                    </div>
                     <h3>SUFF Academy</h3>
                     <p>Developing Next Generation Innovators</p>
                 </a>
@@ -1300,12 +1338,12 @@
             element.addEventListener('mouseleave', function() {
                 this.style.animationPlayState = 'running';
                 // Reset to original transform based on element position
-                if (index === 1) {
-                    // Career Expo - center positioned
-                    this.style.transform = 'translate(-50%, -50%) scale(1)';
+                if (index === 2) {
+                    // Drones - middle left with translateY(-50%)
+                    this.style.transform = 'translateY(-50%) scale(1)';
                 } else if (index === 5) {
-                    // Unplugged - horizontally centered
-                    this.style.transform = 'translateX(-50%) scale(1)';
+                    // Unplugged - middle right with translateY(-50%)
+                    this.style.transform = 'translateY(-50%) scale(1)';
                 } else {
                     this.style.transform = 'scale(1)';
                 }
