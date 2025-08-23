@@ -610,21 +610,21 @@
 
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .partner-card {
-            background: white;
+            background: #1e3a8a;
+            color: white;
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             text-decoration: none;
-            color: inherit;
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
@@ -642,10 +642,11 @@
 
         .partner-card:hover {
             transform: translateY(-10px);
+            background: #1d4ed8;
             border-color: #00f5ff;
             box-shadow: 0 20px 40px rgba(0, 245, 255, 0.2);
             text-decoration: none;
-            color: inherit;
+            color: white;
         }
 
         .partner-logo {
@@ -654,27 +655,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 10px;
         }
 
         .partner-logo img {
-            max-height: 80px;
-            max-width: 200px;
+            max-height: 60px;
+            max-width: 180px;
             width: auto;
             height: auto;
             object-fit: contain;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .partner-card h3 {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #1e1b4b;
+            color: white;
             margin-bottom: 10px;
         }
 
         .partner-card p {
-            color: #64748b;
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.95rem;
         }
 
@@ -769,16 +773,33 @@
 
             .partner-card {
                 padding: 30px 20px;
+                background: #1e3a8a;
+                color: white;
+            }
+
+            .partner-card:hover {
+                background: #1d4ed8;
+                color: white;
             }
 
             .partner-logo {
                 height: 60px;
                 margin-bottom: 15px;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 8px;
             }
 
             .partner-logo img {
-                max-height: 60px;
-                max-width: 150px;
+                max-height: 45px;
+                max-width: 140px;
+            }
+
+            .partner-card h3 {
+                color: white;
+            }
+
+            .partner-card p {
+                color: rgba(255, 255, 255, 0.9);
             }
         }
     </style>
@@ -1194,15 +1215,36 @@
     <!-- Partners Section -->
     <section class="partners-section">
         <div class="container">
-            <h2>Our Partners</h2>
+            <h2>Organisers and Partners</h2>
             <p class="partners-subtitle">Together, building the future of education and innovation</p>
             <div class="partners-grid">
+                <a href="https://wcedonline.westerncape.gov.za/" class="partner-card" target="_blank">
+                    <div class="partner-logo">
+                        <img src="images/WCED.png" alt="Western Cape Education Department Logo" />
+                    </div>
+                    <h3>Western Cape Education Department</h3>
+                    <p>Primary Organiser & Education Authority</p>
+                </a>
                 <a href="https://africaskills.co.za/" class="partner-card" target="_blank">
                     <div class="partner-logo">
                         <img src="images/Africa skills_Logo_blue and green.png" alt="Africa Skills College Logo" />
                     </div>
                     <h3>Africa Skills College</h3>
                     <p>Host Venue & Training Partner</p>
+                </a>
+                <a href="https://www.westerncape.gov.za/dept/edat" class="partner-card" target="_blank">
+                    <div class="partner-logo">
+                        <img src="images/DEDAT.png" alt="Western Cape DEDAT Logo" />
+                    </div>
+                    <h3>Department of Economic Development and Tourism</h3>
+                    <p>Western Cape Government</p>
+                </a>
+                <a href="https://sakhikamva.org.za/" class="partner-card" target="_blank">
+                    <div class="partner-logo">
+                        <img src="images/Sakhikamva.png" alt="Sakhikamva Foundation Logo" />
+                    </div>
+                    <h3>Sakhikamva Foundation</h3>
+                    <p>Community Development</p>
                 </a>
                 <a href="https://www.ctsc.org.za/" class="partner-card" target="_blank">
                     <div class="partner-logo">
@@ -1211,26 +1253,12 @@
                     <h3>Cape Town Science Centre</h3>
                     <p>STEM Education & Innovation</p>
                 </a>
-                <a href="https://sakhikamva.org.za/" class="partner-card" target="_blank">
-                    <div class="partner-logo">
-                        <img src="images/Sakhikamva.png" alt="Sakhikamva Logo" />
-                    </div>
-                    <h3>Sakhikamva</h3>
-                    <p>Community Development</p>
-                </a>
                 <a href="https://edunova.co.za/" class="partner-card" target="_blank">
                     <div class="partner-logo">
                         <img src="images/logo_edunova_logo.png" alt="EduNova Logo" />
                     </div>
                     <h3>EduNova</h3>
                     <p>Educational Innovation</p>
-                </a>
-                <a href="https://www.westerncape.gov.za/dept/edat" class="partner-card" target="_blank">
-                    <div class="partner-logo">
-                        <img src="images/DEDAT.png" alt="Western Cape DEDAT Logo" />
-                    </div>
-                    <h3>Western Cape Department</h3>
-                    <p>Economic Development & Tourism</p>
                 </a>
                 <a href="https://suff.org.za/" class="partner-card" target="_blank">
                     <div class="partner-logo">
