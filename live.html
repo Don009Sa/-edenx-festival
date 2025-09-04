@@ -359,67 +359,6 @@
       opacity: 0.8;
     }
     
-    /* Admin Section */
-    .admin-panel {
-      background: rgba(0,0,0,0.3);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-top: 2rem;
-    }
-    
-    .admin-form {
-      display: grid;
-      gap: 1rem;
-    }
-    
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    
-    .form-group label {
-      font-weight: bold;
-      color: var(--brand-a);
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      padding: 0.75rem;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.1);
-      color: white;
-      font-family: inherit;
-    }
-    
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255,255,255,0.6);
-    }
-    
-    .btn {
-      background: var(--brand-a);
-      color: var(--dark);
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: var(--radius);
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
-    }
-    
-    .btn.danger {
-      background: var(--danger);
-      color: white;
-    }
-    
     /* Responsive */
     @media (max-width: 768px) {
       .header-content {
@@ -714,121 +653,96 @@
       event.target.classList.add('active');
     }
 
-    // Google Sheets Configuration
-    const SHEET_ID = 'YOUR_SHEET_ID_HERE'; // Replace with your actual Sheet ID
-    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+    // Google Sheets Configuration - CORRECTED
+    const SHEET_ID = '1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
+    // Try different sheet references if Sheet1 doesn't work
+    const SHEET_URLS = [
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`,
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`
+    ];
 
-    // Auto-refresh functionality
+    // Auto-refresh functionality with enhanced error handling
     async function refreshLiveUpdates() {
-      try {
-        console.log('Refreshing live data from Google Sheets...');
-        
-        // Fetch data from Google Sheets
-        const response = await fetch(SHEET_URL);
-        const text = await response.text();
-        
-        // Parse Google Sheets JSON response
-        const jsonText = text.substring(47).slice(0, -2); // Remove Google's wrapper
-        const data = JSON.parse(jsonText);
-        
-        // Update live updates list
-        updateLiveUpdatesDisplay(data.table.rows);
-        
-        // Update status bar
-        const statusBar = document.getElementById('statusBar');
-        const now = new Date();
-        statusBar.innerHTML = `🔴 Last updated: ${now.toLocaleTimeString()} | Connected to live data`;
-        
-      } catch (error) {
-        console.error('Error fetching updates:', error);
-        const statusBar = document.getElementById('statusBar');
-        statusBar.innerHTML = `⚠️ Connection issue - using cached data | Last attempt: ${new Date().toLocaleTimeString()}`;
+      const statusBar = document.getElementById('statusBar');
+      
+      for (let i = 0; i < SHEET_URLS.length; i++) {
+        try {
+          console.log(`Trying URL ${i + 1}:`, SHEET_URLS[i]);
+          
+          const response = await fetch(SHEET_URLS[i]);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          const text = await response.text();
+          console.log('Raw response:', text.substring(0, 200) + '...');
+          
+          // Parse Google Sheets JSON response
+          const jsonText = text.substring(47).slice(0, -2);
+          const data = JSON.parse(jsonText);
+          
+          if (data.table && data.table.rows) {
+            // Success! Update display
+            updateLiveUpdatesDisplay(data.table.rows);
+            const now = new Date();
+            statusBar.className = 'status-bar';
+            statusBar.innerHTML = `🔴 Last updated: ${now.toLocaleTimeString()} | Connected to live data`;
+            console.log('Successfully loaded data from Google Sheets');
+            return; // Exit function on success
+          }
+          
+        } catch (error) {
+          console.error(`URL ${i + 1} failed:`, error);
+          continue; // Try next URL
+        }
       }
+      
+      // If all URLs failed
+      console.error('All Google Sheets URLs failed');
+      statusBar.className = 'status-bar warning';
+      statusBar.innerHTML = `⚠️ Connection issue - using cached data | Last attempt: ${new Date().toLocaleTimeString()}`;
     }
 
     function updateLiveUpdatesDisplay(rows) {
-      const updatesList = document.getElementById('liveUpdates');
+      console.log('Updating display with rows:', rows);
+      const updatesList = document.getElementById('liveUpdatesList');
       
-      // Clear existing updates except status bar
-      const statusBar = updatesList.querySelector('.status-bar');
-      updatesList.innerHTML = '';
-      if (statusBar) updatesList.appendChild(statusBar);
+      if (!rows || rows.length <= 1) {
+        console.log('No data rows found or only header row');
+        return;
+      }
       
-      // Add updates from Google Sheets
-      rows.forEach(row => {
-        if (row.c && row.c[0] && row.c[3]) { // Check if row has timestamp and message
+      // Clear existing dynamic updates (keep the static ones for fallback)
+      const existingUpdates = updatesList.querySelectorAll('.update-item.from-sheets');
+      existingUpdates.forEach(item => item.remove());
+      
+      // Add updates from Google Sheets (skip header row)
+      const dataRows = rows.slice(1); // Skip header row
+      
+      dataRows.forEach((row, index) => {
+        if (row.c && row.c.length >= 4) { // Ensure we have at least 4 columns
           const timestamp = row.c[0]?.v || '';
           const type = row.c[1]?.v || 'general';
           const location = row.c[2]?.v || '';
           const message = row.c[3]?.v || '';
           const priority = row.c[4]?.v || 'normal';
           
-          // Skip header row and empty rows
-          if (timestamp !== 'timestamp' && message) {
+          if (timestamp && message) {
             const updateItem = document.createElement('div');
-            updateItem.className = priority === 'urgent' ? 'update-item urgent' : 'update-item';
+            updateItem.className = `update-item from-sheets ${priority === 'urgent' ? 'urgent' : ''}`;
             
             updateItem.innerHTML = `
               <div class="update-time">${timestamp}${priority === 'urgent' ? ' - URGENT' : ''}</div>
-              <div class="update-text"><strong>${location}:</strong> ${message}</div>
+              <div class="update-text"><strong>${location.toUpperCase()}:</strong> ${message}</div>
             `;
             
-            updatesList.appendChild(updateItem);
+            // Insert at the top
+            updatesList.insertBefore(updateItem, updatesList.firstChild);
           }
         }
       });
-    }
-
-    // Admin functionality
-    function postUpdate() {
-      const type = document.getElementById('updateType').value;
-      const room = document.getElementById('updateRoom').value;
-      const message = document.getElementById('updateMessage').value;
-      
-      if (!message.trim()) {
-        alert('Please enter a message');
-        return;
-      }
-      
-      // Create new update element
-      const updatesList = document.getElementById('liveUpdatesList');
-      const newUpdate = document.createElement('div');
-      newUpdate.className = type === 'urgent' ? 'update-item urgent' : 'update-item';
-      
-      const now = new Date();
-      const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-      
-      newUpdate.innerHTML = `
-        <div class="update-time">${timeString}${type === 'urgent' ? ' - URGENT' : ''}</div>
-        <div class="update-text"><strong>${room === 'general' ? 'General' : room.toUpperCase()}:</strong> ${message}</div>
-      `;
-      
-      // Add to top of updates list
-      updatesList.insertBefore(newUpdate, updatesList.firstChild);
-      
-      // Clear form
-      document.getElementById('updateMessage').value = '';
-      
-      // Switch to updates tab to show new post
-      switchTab('updates');
-      document.querySelector('.tab-btn').click();
-      
-      alert('Update posted successfully!');
-    }
-
-    function refreshData() {
-      refreshLiveUpdates();
-      alert('Data refreshed successfully!');
-    }
-
-    function sendUrgentAlert() {
-      const message = prompt('Enter urgent alert message:');
-      if (message) {
-        // Post as urgent update
-        document.getElementById('updateType').value = 'urgent';
-        document.getElementById('updateMessage').value = message;
-        postUpdate();
-      }
     }
 
     // Update event status based on time
