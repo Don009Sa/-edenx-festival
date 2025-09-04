@@ -715,14 +715,69 @@
       event.target.classList.add('active');
     }
 
+    // Google Sheets Configuration
+    const SHEET_ID = 'YOUR_SHEET_ID_HERE'; // Replace with your actual Sheet ID
+    const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+
     // Auto-refresh functionality
-    function refreshLiveUpdates() {
-      console.log('Refreshing live data...');
-      // This would connect to your Google Sheets or live data source
-      // For now, just update timestamp
-      const statusBar = document.getElementById('statusBar');
-      const now = new Date();
-      statusBar.innerHTML = `🔴 Last updated: ${now.toLocaleTimeString()} | All systems operational`;
+    async function refreshLiveUpdates() {
+      try {
+        console.log('Refreshing live data from Google Sheets...');
+        
+        // Fetch data from Google Sheets
+        const response = await fetch(SHEET_URL);
+        const text = await response.text();
+        
+        // Parse Google Sheets JSON response
+        const jsonText = text.substring(47).slice(0, -2); // Remove Google's wrapper
+        const data = JSON.parse(jsonText);
+        
+        // Update live updates list
+        updateLiveUpdatesDisplay(data.table.rows);
+        
+        // Update status bar
+        const statusBar = document.getElementById('statusBar');
+        const now = new Date();
+        statusBar.innerHTML = `🔴 Last updated: ${now.toLocaleTimeString()} | Connected to live data`;
+        
+      } catch (error) {
+        console.error('Error fetching updates:', error);
+        const statusBar = document.getElementById('statusBar');
+        statusBar.innerHTML = `⚠️ Connection issue - using cached data | Last attempt: ${new Date().toLocaleTimeString()}`;
+      }
+    }
+
+    function updateLiveUpdatesDisplay(rows) {
+      const updatesList = document.getElementById('liveUpdates');
+      
+      // Clear existing updates except status bar
+      const statusBar = updatesList.querySelector('.status-bar');
+      updatesList.innerHTML = '';
+      if (statusBar) updatesList.appendChild(statusBar);
+      
+      // Add updates from Google Sheets
+      rows.forEach(row => {
+        if (row.c && row.c[0] && row.c[3]) { // Check if row has timestamp and message
+          const timestamp = row.c[0]?.v || '';
+          const type = row.c[1]?.v || 'general';
+          const location = row.c[2]?.v || '';
+          const message = row.c[3]?.v || '';
+          const priority = row.c[4]?.v || 'normal';
+          
+          // Skip header row and empty rows
+          if (timestamp !== 'timestamp' && message) {
+            const updateItem = document.createElement('div');
+            updateItem.className = priority === 'urgent' ? 'update-item urgent' : 'update-item';
+            
+            updateItem.innerHTML = `
+              <div class="update-time">${timestamp}${priority === 'urgent' ? ' - URGENT' : ''}</div>
+              <div class="update-text"><strong>${location}:</strong> ${message}</div>
+            `;
+            
+            updatesList.appendChild(updateItem);
+          }
+        }
+      });
     }
 
     // Admin functionality
