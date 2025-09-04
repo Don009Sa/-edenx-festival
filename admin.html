@@ -537,13 +537,24 @@
     }
 
     function postResultUpdate() {
-      const challenge = prompt('Which challenge? (Innovation, Drone, goIT, Unplugged, Spike Prime)');
-      const result = prompt('Enter result update:');
-      if (challenge && result) {
-        document.getElementById('updateType').value = 'results';
-        document.getElementById('updateMessage').value = `🏆 ${challenge} Challenge: ${result}`;
-        postLiveUpdate();
-      }
+      const challenge = prompt('Which challenge?\n(Innovation, Drone, goIT, Unplugged, Spike Prime)');
+      if (!challenge) return;
+      
+      const teamName = prompt('Team name:');
+      if (!teamName) return;
+      
+      const schoolName = prompt('School name:');
+      if (!schoolName) return;
+      
+      const score = prompt('Score/Result:');
+      if (!score) return;
+      
+      const position = prompt('Position (1st, 2nd, 3rd, etc.):');
+      if (!position) return;
+      
+      document.getElementById('updateType').value = 'results';
+      document.getElementById('updateMessage').value = `🏆 ${challenge} Challenge: ${position} - ${teamName} (${schoolName}) - Score: ${score}`;
+      postLiveUpdate();
     }
 
     function refreshDashboard() {
