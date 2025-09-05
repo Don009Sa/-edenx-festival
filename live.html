@@ -7,141 +7,83 @@
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    :root {
-      --brand-a: #00e5ff;
-      --brand-b: #e91e63;
-      --success: #10B981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --dark: #1e1b4b;
-      --light: #f8fafc;
-      --radius: 12px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.1);
+    :root{
+      --brand-a:#00e5ff; --brand-b:#e91e63; --success:#10B981; --warning:#f59e0b;
+      --danger:#ef4444; --dark:#1e1b4b; --light:#f8fafc; --radius:12px; --shadow:0 4px 20px rgba(0,0,0,.1);
     }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
-      color: white;
-      min-height: 100vh;
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%); color:#fff; min-height:100vh;
     }
-    
-    /* Header */
-    .header {
-      background: rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .logo { font-size: 1.5rem; font-weight: bold; color: var(--brand-a); }
-    .live-indicator {
-      display: flex; align-items: center; gap: .5rem;
-      background: var(--danger); padding: .5rem 1rem; border-radius: 20px;
-      font-size: .9rem; font-weight: bold;
-    }
-    .live-dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+    .header{background:rgba(0,0,0,.2); backdrop-filter:blur(10px); padding:1rem; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(255,255,255,.1)}
+    .header-content{display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto}
+    .logo{font-size:1.5rem; font-weight:bold; color:var(--brand-a)}
+    .live-indicator{display:flex; align-items:center; gap:.5rem; background:var(--danger); padding:.5rem 1rem; border-radius:20px; font-size:.9rem; font-weight:700}
+    .live-dot{width:8px; height:8px; background:#fff; border-radius:50%; animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1} 50%{opacity:.5}}
 
-    /* Tabs */
-    .nav-tabs {
-      display: flex; background: rgba(255,255,255,0.1);
-      margin: 1rem; border-radius: var(--radius); padding: 4px; gap: 4px; overflow-x: auto;
-    }
-    .tab-btn {
-      flex: 1; background: none; border: none; color: #fff; padding: .75rem 1rem;
-      border-radius: calc(var(--radius) - 4px); font-weight: 600; cursor: pointer;
-      transition: .2s; white-space: nowrap; min-width: max-content;
-    }
-    .tab-btn.active { background: var(--brand-a); color: var(--dark); }
-    .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.1); }
+    .nav-tabs{display:flex; background:rgba(255,255,255,.1); margin:1rem; border-radius:var(--radius); padding:4px; gap:4px; overflow-x:auto}
+    .tab-btn{flex:1; background:none; border:none; color:#fff; padding:.75rem 1rem; border-radius:calc(var(--radius) - 4px); font-weight:600; cursor:pointer; transition:.2s; white-space:nowrap; min-width:max-content}
+    .tab-btn.active{background:var(--brand-a); color:var(--dark)}
+    .tab-btn:hover:not(.active){background:rgba(255,255,255,.1)}
 
-    /* Content */
-    .tab-content { display: none; padding: 0 1rem 2rem; max-width: 1200px; margin: 0 auto; }
-    .tab-content.active { display: block; }
+    .tab-content{display:none; padding:0 1rem 2rem; max-width:1200px; margin:0 auto}
+    .tab-content.active{display:block}
 
-    /* Status bar */
-    .status-bar {
-      background: linear-gradient(90deg, var(--success), #059669);
-      padding: 1rem; margin-bottom: 1.5rem; border-radius: var(--radius);
-      text-align: center; font-weight: bold;
-    }
-    .status-bar.warning { background: linear-gradient(90deg, var(--warning), #d97706); }
-    .status-bar.danger { background: linear-gradient(90deg, var(--danger), #dc2626); }
+    .status-bar{background:linear-gradient(90deg,var(--success),#059669); padding:1rem; margin-bottom:1.5rem; border-radius:var(--radius); text-align:center; font-weight:700}
+    .status-bar.warning{background:linear-gradient(90deg,var(--warning),#d97706)}
+    .status-bar.danger{background:linear-gradient(90deg,var(--danger),#dc2626)}
 
-    /* Cards */
-    .card {
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .card h3 { color: var(--brand-a); margin-bottom: 1rem; font-size: 1.3rem; }
+    .card{background:rgba(255,255,255,.1); backdrop-filter:blur(10px); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; border:1px solid rgba(255,255,255,.2)}
+    .card h3{color:var(--brand-a); margin-bottom:1rem; font-size:1.3rem}
 
-    /* Updates */
-    .update-item {
-      background: rgba(255,255,255,0.05);
-      padding: 1rem; border-radius: var(--radius); margin-bottom: .75rem; border-left: 4px solid var(--brand-a);
-    }
-    .update-item.urgent { border-left-color: var(--danger); background: rgba(239,68,68,.1); }
-    .update-time { color: var(--brand-a); font-weight: bold; font-size: .9rem; margin-bottom: .5rem; }
-    .update-text { line-height: 1.5; }
+    .update-item{background:rgba(255,255,255,.05); padding:1rem; border-radius:var(--radius); margin-bottom:.75rem; border-left:4px solid var(--brand-a)}
+    .update-item.urgent{border-left-color:var(--danger); background:rgba(239,68,68,.1)}
+    .update-time{color:var(--brand-a); font-weight:700; font-size:.9rem; margin-bottom:.5rem}
+    .update-text{line-height:1.5}
 
-    /* Results (static placeholder for now) */
-    .results-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
-    .result-card { background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1rem; border: 1px solid rgba(255,255,255,0.2); }
-    .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-    .result-title { font-weight: bold; font-size: 1.1rem; }
-    .result-status { padding: .25rem .75rem; border-radius: 20px; font-size: .8rem; font-weight: bold; }
-    .result-status.live { background: var(--danger); }
-    .result-status.complete { background: var(--success); }
-    .result-status.upcoming { background: var(--warning); color: var(--dark); }
-    .leaderboard { list-style: none; }
-    .leaderboard li { display:flex; justify-content:space-between; align-items:center; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.1); }
+    .results-grid{display:grid; gap:1rem; margin-bottom:2rem}
+    .result-card{background:rgba(255,255,255,.1); border-radius:var(--radius); padding:1rem; border:1px solid rgba(255,255,255,.2)}
+    .result-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem}
+    .result-title{font-weight:700; font-size:1.1rem}
+    .result-status{padding:.25rem .75rem; border-radius:20px; font-size:.8rem; font-weight:700}
+    .result-status.live{background:var(--danger)}
+    .result-status.complete{background:var(--success)}
+    .result-status.upcoming{background:var(--warning); color:var(--dark)}
+    .leaderboard{list-style:none}
+    .leaderboard li{display:flex; justify-content:space-between; align-items:center; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.1)}
     .leaderboard li:last-child{border-bottom:0}
     .team-info{flex:1}
-    .team-name{font-weight:bold;margin-bottom:.2rem}
-    .team-school{font-size:.9rem;opacity:.8}
-    .team-score{font-weight:bold;color:var(--brand-a);font-size:1.1rem}
+    .team-name{font-weight:700; margin-bottom:.2rem}
+    .team-school{font-size:.9rem; opacity:.8}
+    .team-score{font-weight:700; color:var(--brand-a); font-size:1.1rem}
 
-    /* Schedule */
-    .timeline { position: relative; }
-    .timeline::before { content:""; position:absolute; left:20px; top:0; bottom:0; width:2px; background: var(--brand-a); }
-    .timeline-item { display:flex; margin-bottom:1.5rem; position:relative; }
-    .timeline-dot { width:12px; height:12px; background: var(--brand-a); border-radius:50%; margin: .5rem 1rem 0 14px; z-index:2; flex-shrink:0; }
-    .timeline-dot.active { background: var(--success); animation: pulse-dot 2s infinite; }
-    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)} }
-    .timeline-content { flex:1; background: rgba(255,255,255,.05); padding:1rem; border-radius: var(--radius); }
-    .timeline-content.active { background: rgba(16,185,129,.2); border:1px solid var(--success); }
-    .timeline-time { color: var(--brand-a); font-weight:bold; margin-bottom:.5rem; }
-    .timeline-event { font-weight:bold; margin-bottom:.3rem; }
-    .timeline-venue { font-size:.9rem; opacity:.8; margin-bottom:.5rem; }
+    .timeline{position:relative}
+    .timeline::before{content:""; position:absolute; left:20px; top:0; bottom:0; width:2px; background:var(--brand-a)}
+    .timeline-item{display:flex; margin-bottom:1.5rem; position:relative}
+    .timeline-dot{width:12px; height:12px; background:var(--brand-a); border-radius:50%; margin:.5rem 1rem 0 14px; z-index:2; flex-shrink:0}
+    .timeline-dot.active{background:var(--success); animation:pulse-dot 2s infinite}
+    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
+    .timeline-content{flex:1; background:rgba(255,255,255,.05); padding:1rem; border-radius:var(--radius)}
+    .timeline-content.active{background:rgba(16,185,129,.2); border:1px solid var(--success)}
+    .timeline-time{color:var(--brand-a); font-weight:700; margin-bottom:.5rem}
+    .timeline-event{font-weight:700; margin-bottom:.3rem}
+    .timeline-venue{font-size:.9rem; opacity:.8; margin-bottom:.5rem}
 
-    /* Venue */
-    .venue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-    .room-card { background: rgba(255,255,255,0.1); padding:1rem; border-radius: var(--radius); text-align:center; border:2px solid transparent; transition:.2s; }
-    .room-card.active { border-color: var(--success); background: rgba(16,185,129,.2); }
-    .room-number{font-size:2rem;font-weight:bold;color:var(--brand-a);margin-bottom:.5rem}
-    .room-activity{font-weight:bold;margin-bottom:.5rem}
-    .room-details{font-size:.9rem;opacity:.8}
+    .venue-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem}
+    .room-card{background:rgba(255,255,255,.1); padding:1rem; border-radius:var(--radius); text-align:center; border:2px solid transparent; transition:.2s}
+    .room-card.active{border-color:var(--success); background:rgba(16,185,129,.2)}
+    .room-number{font-size:2rem; font-weight:700; color:var(--brand-a); margin-bottom:.5rem}
+    .room-activity{font-weight:700; margin-bottom:.5rem}
+    .room-details{font-size:.9rem; opacity:.8}
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .header-content { flex-direction: column; gap: 1rem; }
-      .nav-tabs { margin: 1rem .5rem; }
-      .tab-content { padding: 0 .5rem 2rem; }
-      .venue-grid { grid-template-columns: 1fr; }
-      .timeline::before { left: 10px; }
-      .timeline-dot { margin-left: 4px; }
+    @media (max-width:768px){
+      .header-content{flex-direction:column; gap:1rem}
+      .nav-tabs{margin:1rem .5rem}
+      .tab-content{padding:0 .5rem 2rem}
+      .venue-grid{grid-template-columns:1fr}
+      .timeline::before{left:10px}
+      .timeline-dot{margin-left:4px}
     }
   </style>
 </head>
@@ -167,14 +109,11 @@
 
   <!-- Live Updates -->
   <div class="tab-content active" id="updates">
-    <div class="status-bar" id="statusBar" aria-live="polite">
-      Connecting to live data…
-    </div>
-
+    <div class="status-bar" id="statusBar" aria-live="polite">Connecting to live data…</div>
     <div class="card">
       <h3>Latest Updates</h3>
       <div id="liveUpdatesList">
-        <!-- Fallback static items (kept as backup if Sheets is down) -->
+        <!-- Fallback examples (only shown if Sheets fails) -->
         <div class="update-item urgent">
           <div class="update-time">10:45 AM - URGENT</div>
           <div class="update-text"><strong>ROOM 4 - INNOVATION:</strong> Technical issue resolved. All teams back to prototyping!</div>
@@ -187,35 +126,10 @@
     </div>
   </div>
 
-  <!-- Results (static example; dynamic wiring comes next) -->
+  <!-- Results (dynamic) -->
   <div class="tab-content" id="results">
-    <div class="results-grid">
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">Innovation Challenge (Micro:bit)</div>
-          <div class="result-status live">LIVE</div>
-        </div>
-        <ul class="leaderboard">
-          <li>
-            <div class="team-info">
-              <div class="team-name">1st - Tech Innovators</div>
-              <div class="team-school">Outeniqua Primary</div>
-            </div>
-            <div class="team-score">94.5</div>
-          </li>
-          <li>
-            <div class="team-info">
-              <div class="team-name">2nd - Code Creators</div>
-              <div class="team-school">York High School</div>
-            </div>
-            <div class="team-score">91.2</div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="card">
-      <p style="opacity:.8">Results will be wired to Google Sheets after we lock down the Updates flow.</p>
-    </div>
+    <div class="status-bar" id="resultsStatus" aria-live="polite">Loading results…</div>
+    <div id="resultsGrid" class="results-grid"></div>
   </div>
 
   <!-- Schedule -->
@@ -354,12 +268,13 @@
 
     /* -------- Google Sheets (GViz, read-only) -------- */
     const SHEET_ID = '1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
-    const SHEET_TABS = ['Updates','updates','Sheet1']; // try in this order
+    const UPDATES_TABS = ['Updates','updates','Sheet1']; // try in this order
+    const RESULTS_TABS = ['Results','results','Scores','scores']; // flexible
 
     // Fetch GViz JSON robustly, with cache-busting
-    async function fetchGvizRows() {
+    async function fetchGvizRows(tabNames) {
       const urls = [
-        ...SHEET_TABS.map(n => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(n)}`),
+        ...tabNames.map(n => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(n)}`),
         `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
         `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`
       ];
@@ -381,36 +296,27 @@
     // Prefer formatted value; normalize GViz time/timeofday/Date() formats
     function fmtTimestamp(cell) {
       if (!cell) return '';
-      if (cell.f) return String(cell.f); // Google’s formatted string
+      if (cell.f) return String(cell.f); // formatted string
       const v = cell.v;
-
-      // timeofday -> [h,m,s,ms]
-      if (Array.isArray(v) && v.length >= 2) {
-        const [h,m] = v;
-        return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      if (Array.isArray(v) && v.length >= 2) { // timeofday -> [h,m,s,ms]
+        const [h,m] = v; return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
       }
-      // Date(YYYY,MM,DD,hh,mm,ss)
-      if (typeof v === 'string' && /^Date\(/.test(v)) {
+      if (typeof v === 'string' && /^Date\(/.test(v)) { // Date(YYYY,MM,DD,hh,mm,ss)
         const m = v.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)/);
-        if (m) {
-          const hh = String(+m[4]).padStart(2,'0');
-          const mm = String(+m[5]).padStart(2,'0');
-          return `${hh}:${mm}`;
-        }
+        if (m) { const hh = String(+m[4]).padStart(2,'0'); const mm = String(+m[5]).padStart(2,'0'); return `${hh}:${mm}`; }
       }
-      // Serial number (rare with GViz)
-      if (typeof v === 'number') {
-        const ms = Math.round((v - 25569) * 86400 * 1000);
-        const d = new Date(ms);
+      if (typeof v === 'number') { // Excel serial
+        const ms = Math.round((v - 25569) * 86400 * 1000); const d = new Date(ms);
         return d.toTimeString().slice(0,5);
       }
       return String(v ?? '');
     }
 
+    /* -------- Live Updates rendering -------- */
     async function refreshLiveUpdates() {
       const statusBar = document.getElementById('statusBar');
       try {
-        const rows = await fetchGvizRows();
+        const rows = await fetchGvizRows(UPDATES_TABS);
         renderUpdates(rows);
         statusBar.className = 'status-bar';
         statusBar.textContent = `✅ Connected • Last updated ${new Date().toLocaleTimeString()}`;
@@ -423,13 +329,10 @@
 
     function renderUpdates(rows) {
       const list = document.getElementById('liveUpdatesList');
-
-      // Detect header row (timestamp | type | location | message | priority)
       const header = rows[0]?.c?.map(c => String(c?.v ?? '').toLowerCase());
       const hasHeader = header && header.includes('timestamp') && header.includes('message');
       const data = rows.slice(hasHeader ? 1 : 0);
 
-      // Remove previous dynamic items
       list.querySelectorAll('.update-item.from-sheets').forEach(n => n.remove());
 
       data.forEach(r => {
@@ -449,16 +352,129 @@
           <div class="update-time">${timestamp || ''}${priority === 'urgent' ? ' - URGENT' : ''}</div>
           <div class="update-text">${locHtml || typePrefix}${message}</div>
         `;
-        list.prepend(div); // newest first
+        list.prepend(div);
       });
+    }
+
+    /* -------- Results rendering -------- */
+    async function refreshResults() {
+      const bar = document.getElementById('resultsStatus');
+      const grid = document.getElementById('resultsGrid');
+      try {
+        const rows = await fetchGvizRows(RESULTS_TABS);
+        renderResults(rows, grid);
+        bar.className = 'status-bar';
+        bar.textContent = `✅ Results synced • ${new Date().toLocaleTimeString()}`;
+      } catch (e) {
+        console.error(e);
+        bar.className = 'status-bar warning';
+        bar.textContent = `⚠️ Couldn’t load latest results • ${new Date().toLocaleTimeString()}`;
+      }
+    }
+
+    function norm(s){ return String(s ?? '').trim().toLowerCase(); }
+    function toOrdinal(n){
+      n = Number(n);
+      if (!Number.isFinite(n)) return '';
+      const v = n % 100;
+      if (v >= 11 && v <= 13) return n + 'th';
+      switch (n % 10){ case 1: return n+'st'; case 2: return n+'nd'; case 3: return n+'rd'; default: return n+'th'; }
+    }
+
+    function renderResults(rows, gridEl){
+      // map headers to indices (support synonyms)
+      const headerCells = rows[0]?.c || [];
+      const H = headerCells.map(c => norm(c?.v));
+      const idx = {
+        challenge: H.findIndex(h => ['challenge','event','category'].includes(h)),
+        position:  H.findIndex(h => ['position','rank','place'].includes(h)),
+        team:      H.findIndex(h => ['team','team name','teamname'].includes(h)),
+        school:    H.findIndex(h => ['school','organisation','organization'].includes(h)),
+        score:     H.findIndex(h => ['score','points','mark','marks'].includes(h)),
+        status:    H.findIndex(h => ['status','state'].includes(h)),
+      };
+
+      const data = rows.slice(1).map(r => {
+        const c = r.c || [];
+        // coerce values
+        const challenge = c[idx.challenge]?.v ?? '';
+        const posRaw = c[idx.position]?.v ?? '';
+        const position = Number(posRaw);
+        const team = c[idx.team]?.v ?? '';
+        const school = c[idx.school]?.v ?? '';
+        const score = Number(c[idx.score]?.v ?? NaN);
+        const status = norm(c[idx.status]?.v ?? '');
+        return { challenge, position, team, school, score, status };
+      }).filter(x => x.challenge || x.team || Number.isFinite(x.score));
+
+      // group by challenge
+      const groups = {};
+      for (const row of data){
+        const key = row.challenge || 'Untitled';
+        (groups[key] ||= []).push(row);
+      }
+
+      // clear and render
+      gridEl.innerHTML = '';
+
+      if (!Object.keys(groups).length){
+        const empty = document.createElement('div');
+        empty.className = 'card';
+        empty.innerHTML = '<p style="opacity:.85">No results yet. They will appear here as judges publish scores.</p>';
+        gridEl.appendChild(empty);
+        return;
+      }
+
+      for (const [challenge, items] of Object.entries(groups)){
+        // determine status precedence
+        let status = 'upcoming';
+        if (items.some(i => i.status === 'live')) status = 'live';
+        else if (items.some(i => i.status === 'complete')) status = 'complete';
+
+        // sort: by position asc if valid, else by score desc
+        const withPos = items.filter(i => Number.isFinite(i.position));
+        const withoutPos = items.filter(i => !Number.isFinite(i.position));
+        withPos.sort((a,b) => a.position - b.position);
+        withoutPos.sort((a,b) => (isNaN(b.score)?-Infinity:b.score) - (isNaN(a.score)?-Infinity:a.score));
+        const sorted = withPos.concat(withoutPos);
+
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <div class="result-header">
+            <div class="result-title">${challenge}</div>
+            <div class="result-status ${status}">${status.toUpperCase()}</div>
+          </div>
+          <ul class="leaderboard"></ul>
+        `;
+        const ul = card.querySelector('.leaderboard');
+
+        for (const row of sorted){
+          const li = document.createElement('li');
+          const posLabel = Number.isFinite(row.position) ? `${toOrdinal(row.position)} - ` : '';
+          const scoreLabel = Number.isFinite(row.score) ? row.score : '—';
+          li.innerHTML = `
+            <div class="team-info">
+              <div class="team-name">${posLabel}${row.team || 'Unnamed team'}</div>
+              <div class="team-school">${row.school || ''}</div>
+            </div>
+            <div class="team-score">${scoreLabel}</div>
+          `;
+          ul.appendChild(li);
+        }
+
+        gridEl.appendChild(card);
+      }
     }
 
     /* -------- Init & timers -------- */
     document.addEventListener('DOMContentLoaded', () => {
       updateEventStatus();
       refreshLiveUpdates();
+      refreshResults();
       setInterval(updateEventStatus, 60_000);   // every minute
       setInterval(refreshLiveUpdates, 30_000);  // every 30s
+      setInterval(refreshResults, 30_000);      // every 30s
     });
   </script>
 </body>
