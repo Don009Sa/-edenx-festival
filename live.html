@@ -4,102 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EdenX Live Dashboard</title>
-  
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root{
-      --brand-a:#00e5ff; --brand-b:#e91e63; --success:#10B981; --warning:#f59e0b;
-      --danger:#ef4444; --dark:#1e1b4b; --light:#f8fafc; --radius:12px; --shadow:0 4px 20px rgba(0,0,0,.1);
-    }
-    body{
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-      background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%); color:#fff; min-height:100vh;
-    }
-    .header{background:rgba(0,0,0,.2); backdrop-filter:blur(10px); padding:1rem; position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(255,255,255,.1)}
-    .header-content{display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto}
-    .logo{font-size:1.5rem; font-weight:bold; color:var(--brand-a)}
-    .live-indicator{display:flex; align-items:center; gap:.5rem; background:var(--danger); padding:.5rem 1rem; border-radius:20px; font-size:.9rem; font-weight:700}
-    .live-dot{width:8px; height:8px; background:#fff; border-radius:50%; animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1} 50%{opacity:.5}}
-
-    .nav-tabs{display:flex; background:rgba(255,255,255,.1); margin:1rem; border-radius:var(--radius); padding:4px; gap:4px; overflow-x:auto}
-    .tab-btn{flex:1; background:none; border:none; color:#fff; padding:.75rem 1rem; border-radius:calc(var(--radius) - 4px); font-weight:600; cursor:pointer; transition:.2s; white-space:nowrap; min-width:max-content}
-    .tab-btn.active{background:var(--brand-a); color:var(--dark)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--brand-a:#00e5ff;--brand-b:#e91e63;--success:#10B981;--warning:#f59e0b;--danger:#ef4444;--dark:#1e1b4b;--light:#f8fafc;--radius:12px;--shadow:0 4px 20px rgba(0,0,0,.1)}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%);color:#fff;min-height:100vh}
+    .header{background:rgba(0,0,0,.2);backdrop-filter:blur(10px);padding:1rem;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.1)}
+    .header-content{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo{font-size:1.5rem;font-weight:700;color:var(--brand-a)}
+    .live-indicator{display:flex;align-items:center;gap:.5rem;background:var(--danger);padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:700}
+    .live-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .nav-tabs{display:flex;background:rgba(255,255,255,.1);margin:1rem;border-radius:var(--radius);padding:4px;gap:4px;overflow-x:auto}
+    .tab-btn{flex:1;background:none;border:none;color:#fff;padding:.75rem 1rem;border-radius:calc(var(--radius) - 4px);font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap;min-width:max-content}
+    .tab-btn.active{background:var(--brand-a);color:var(--dark)}
     .tab-btn:hover:not(.active){background:rgba(255,255,255,.1)}
-
-    .tab-content{display:none; padding:0 1rem 2rem; max-width:1200px; margin:0 auto}
+    .tab-content{display:none;padding:0 1rem 2rem;max-width:1200px;margin:0 auto}
     .tab-content.active{display:block}
-
-    .status-bar{background:linear-gradient(90deg,var(--success),#059669); padding:1rem; margin-bottom:1.5rem; border-radius:var(--radius); text-align:center; font-weight:700}
+    .status-bar{background:linear-gradient(90deg,var(--success),#059669);padding:1rem;margin-bottom:1.5rem;border-radius:var(--radius);text-align:center;font-weight:700}
     .status-bar.warning{background:linear-gradient(90deg,var(--warning),#d97706)}
     .status-bar.danger{background:linear-gradient(90deg,var(--danger),#dc2626)}
-
-    .card{background:rgba(255,255,255,.1); backdrop-filter:blur(10px); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; border:1px solid rgba(255,255,255,.2)}
-    .card h3{color:var(--brand-a); margin-bottom:1rem; font-size:1.3rem}
-
-    .update-item{background:rgba(255,255,255,.05); padding:1rem; border-radius:var(--radius); margin-bottom:.75rem; border-left:4px solid var(--brand-a)}
-    .update-item.urgent{border-left-color:var(--danger); background:rgba(239,68,68,.1)}
-    .update-time{color:var(--brand-a); font-weight:700; font-size:.9rem; margin-bottom:.5rem}
+    .card{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;border:1px solid rgba(255,255,255,.2)}
+    .card h3{color:var(--brand-a);margin-bottom:1rem;font-size:1.3rem}
+    .update-item{background:rgba(255,255,255,.05);padding:1rem;border-radius:var(--radius);margin-bottom:.75rem;border-left:4px solid var(--brand-a)}
+    .update-item.urgent{border-left-color:var(--danger);background:rgba(239,68,68,.1)}
+    .update-time{color:var(--brand-a);font-weight:700;font-size:.9rem;margin-bottom:.5rem}
     .update-text{line-height:1.5}
-
-    .results-grid{display:grid; gap:1rem; margin-bottom:2rem}
-    .result-card{background:rgba(255,255,255,.1); border-radius:var(--radius); padding:1rem; border:1px solid rgba(255,255,255,.2)}
-    .result-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem}
-    .result-title{font-weight:700; font-size:1.1rem}
-    .result-status{padding:.25rem .75rem; border-radius:20px; font-size:.8rem; font-weight:700}
+    .results-grid{display:grid;gap:1rem;margin-bottom:2rem}
+    .result-card{background:rgba(255,255,255,.1);border-radius:var(--radius);padding:1rem;border:1px solid rgba(255,255,255,.2)}
+    .result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .result-title{font-weight:700;font-size:1.1rem}
+    .result-status{padding:.25rem .75rem;border-radius:20px;font-size:.8rem;font-weight:700}
     .result-status.live{background:var(--danger)}
     .result-status.complete{background:var(--success)}
-    .result-status.upcoming{background:var(--warning); color:var(--dark)}
+    .result-status.upcoming{background:var(--warning);color:var(--dark)}
     .leaderboard{list-style:none}
-    .leaderboard li{display:flex; justify-content:space-between; align-items:center; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.1)}
+    .leaderboard li{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
     .leaderboard li:last-child{border-bottom:0}
     .team-info{flex:1}
-    .team-name{font-weight:700; margin-bottom:.2rem}
-    .team-school{font-size:.9rem; opacity:.8}
-    .team-score{font-weight:700; color:var(--brand-a); font-size:1.1rem}
-
+    .team-name{font-weight:700;margin-bottom:.2rem}
+    .team-school{font-size:.9rem;opacity:.8}
+    .team-score{font-weight:700;color:var(--brand-a);font-size:1.1rem}
     .timeline{position:relative}
-    .timeline::before{content:""; position:absolute; left:20px; top:0; bottom:0; width:2px; background:var(--brand-a)}
-    .timeline-item{display:flex; margin-bottom:1.5rem; position:relative}
-    .timeline-dot{width:12px; height:12px; background:var(--brand-a); border-radius:50%; margin:.5rem 1rem 0 14px; z-index:2; flex-shrink:0}
-    .timeline-dot.active{background:var(--success); animation:pulse-dot 2s infinite}
-    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
-    .timeline-content{flex:1; background:rgba(255,255,255,.05); padding:1rem; border-radius:var(--radius)}
-    .timeline-content.active{background:rgba(16,185,129,.2); border:1px solid var(--success)}
-    .timeline-time{color:var(--brand-a); font-weight:700; margin-bottom:.5rem}
-    .timeline-event{font-weight:700; margin-bottom:.3rem}
-    .timeline-venue{font-size:.9rem; opacity:.8; margin-bottom:.5rem}
-
-    .venue-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem}
-    .room-card{background:rgba(255,255,255,.1); padding:1rem; border-radius:var(--radius); text-align:center; border:2px solid transparent; transition:.2s}
-    .room-card.active{border-color:var(--success); background:rgba(16,185,129,.2)}
-    .room-number{font-size:2rem; font-weight:700; color:var(--brand-a); margin-bottom:.5rem}
-    .room-activity{font-weight:700; margin-bottom:.5rem}
-    .room-details{font-size:.9rem; opacity:.8}
-
-    @media (max-width:768px){
-      .header-content{flex-direction:column; gap:1rem}
-      .nav-tabs{margin:1rem .5rem}
-      .tab-content{padding:0 .5rem 2rem}
-      .venue-grid{grid-template-columns:1fr}
-      .timeline::before{left:10px}
-      .timeline-dot{margin-left:4px}
-    }
+    .timeline::before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:var(--brand-a)}
+    .timeline-item{display:flex;margin-bottom:1.5rem;position:relative}
+    .timeline-dot{width:12px;height:12px;background:var(--brand-a);border-radius:50%;margin:.5rem 1rem 0 14px;z-index:2;flex-shrink:0}
+    .timeline-dot.active{background:var(--success);animation:pulse-dot 2s infinite}
+    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)}50%{box-shadow:0 0 0 10px rgba(16,185,129,0)}}
+    .timeline-content{flex:1;background:rgba(255,255,255,.05);padding:1rem;border-radius:var(--radius)}
+    .timeline-content.active{background:rgba(16,185,129,.2);border:1px solid var(--success)}
+    .timeline-time{color:var(--brand-a);font-weight:700;margin-bottom:.5rem}
+    .timeline-event{font-weight:700;margin-bottom:.3rem}
+    .timeline-venue{font-size:.9rem;opacity:.8;margin-bottom:.5rem}
+    .venue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+    .room-card{background:rgba(255,255,255,.1);padding:1rem;border-radius:var(--radius);text-align:center;border:2px solid transparent;transition:.2s}
+    .room-card.active{border-color:var(--success);background:rgba(16,185,129,.2)}
+    .room-number{font-size:2rem;font-weight:700;color:var(--brand-a);margin-bottom:.5rem}
+    .room-activity{font-weight:700;margin-bottom:.5rem}
+    .room-details{font-size:.9rem;opacity:.8}
+    @media (max-width:768px){.header-content{flex-direction:column;gap:1rem}.nav-tabs{margin:1rem .5rem}.tab-content{padding:0 .5rem 2rem}.venue-grid{grid-template-columns:1fr}.timeline::before{left:10px}.timeline-dot{margin-left:4px}}
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
     <div class="header-content">
       <div class="logo">EdenX Live Dashboard</div>
-      <div class="live-indicator">
-        <div class="live-dot"></div>
-        <span id="liveStatus">EVENT STARTS SOON</span>
-      </div>
+      <div class="live-indicator"><div class="live-dot"></div><span id="liveStatus">EVENT STARTS SOON</span></div>
     </div>
   </header>
 
-  <!-- Tabs -->
   <nav class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('updates', this)">Live Updates</button>
     <button class="tab-btn" onclick="switchTab('results', this)">Results</button>
@@ -109,11 +81,11 @@
 
   <!-- Live Updates -->
   <div class="tab-content active" id="updates">
-    <div class="status-bar" id="statusBar" aria-live="polite">Connecting to live data…</div>
+    <div id="statusBar" class="status-bar" aria-live="polite">Connecting to live data…</div>
     <div class="card">
       <h3>Latest Updates</h3>
       <div id="liveUpdatesList">
-        <!-- Fallback examples (only shown if Sheets fails) -->
+        <!-- Fallback examples -->
         <div class="update-item urgent">
           <div class="update-time">10:45 AM - URGENT</div>
           <div class="update-text"><strong>ROOM 4 - INNOVATION:</strong> Technical issue resolved. All teams back to prototyping!</div>
@@ -126,9 +98,9 @@
     </div>
   </div>
 
-  <!-- Results (dynamic) -->
+  <!-- Results -->
   <div class="tab-content" id="results">
-    <div class="status-bar" id="resultsStatus" aria-live="polite">Loading results…</div>
+    <div id="resultsStatus" class="status-bar" aria-live="polite">Loading results…</div>
     <div id="resultsGrid" class="results-grid"></div>
   </div>
 
@@ -137,344 +109,228 @@
     <div class="card">
       <h3>Today's Schedule</h3>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-time">07:30 - 08:30</div>
-            <div class="timeline-event">Registration & Morning Tea</div>
-            <div class="timeline-venue">Registration Area & Refreshment Room</div>
-            <p>Team check-in, snack packs, stakeholder networking</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-time">08:30 - 09:30</div>
-            <div class="timeline-event">Opening Ceremony</div>
-            <div class="timeline-venue">Room 1</div>
-            <p>Welcome addresses, Tech Titan game launch</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot active"></div>
-          <div class="timeline-content active">
-            <div class="timeline-time">09:50 - 13:00</div>
-            <div class="timeline-event">Morning Competition Sessions</div>
-            <div class="timeline-venue">Rooms 1–5</div>
-            <p>All 5 challenges running in parallel</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-time">13:00 - 13:40</div>
-            <div class="timeline-event">Lunch Break</div>
-            <div class="timeline-venue">Refreshment Area</div>
-            <p>Networking and expo exploration</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-time">13:40 - 15:45</div>
-            <div class="timeline-event">Afternoon Sessions</div>
-            <div class="timeline-venue">Rooms 1, 2, 4</div>
-            <p>Final rounds for select challenges</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-time">15:45 - 16:30</div>
-            <div class="timeline-event">Awards & Closing</div>
-            <div class="timeline-venue">Room 1</div>
-            <p>Prize ceremony for all competitions</p>
-          </div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-time">07:30 - 08:30</div><div class="timeline-event">Registration & Morning Tea</div><div class="timeline-venue">Registration Area & Refreshment Room</div><p>Team check-in, snack packs, stakeholder networking</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-time">08:30 - 09:30</div><div class="timeline-event">Opening Ceremony</div><div class="timeline-venue">Room 1</div><p>Welcome addresses, Tech Titan game launch</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot active"></div><div class="timeline-content active"><div class="timeline-time">09:50 - 13:00</div><div class="timeline-event">Morning Competition Sessions</div><div class="timeline-venue">Rooms 1–5</div><p>All 5 challenges running in parallel</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-time">13:00 - 13:40</div><div class="timeline-event">Lunch Break</div><div class="timeline-venue">Refreshment Area</div><p>Networking and expo exploration</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-time">13:40 - 15:45</div><div class="timeline-event">Afternoon Sessions</div><div class="timeline-venue">Rooms 1, 2, 4</div><p>Final rounds for select challenges</p></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-time">15:45 - 16:30</div><div class="timeline-event">Awards & Closing</div><div class="timeline-venue">Room 1</div><p>Prize ceremony for all competitions</p></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Venue Map -->
+  <!-- Venue -->
   <div class="tab-content" id="venue">
     <div class="card">
       <h3>Room Locations & Activities</h3>
       <div class="venue-grid">
-        <div class="room-card active">
-          <div class="room-number">Room 1</div>
-          <div class="room-activity">Drone Challenge</div>
-          <div class="room-details">20 schools | Grades 10–12<br/>Also: Opening & Closing ceremonies</div>
-        </div>
-        <div class="room-card active">
-          <div class="room-number">Room 2</div>
-          <div class="room-activity">Spike Prime Challenge</div>
-          <div class="room-details">20 schools | Grades 6–10<br/>LEGO robotics competition</div>
-        </div>
-        <div class="room-card active">
-          <div class="room-number">Room 3</div>
-          <div class="room-activity">Unplugged Coding</div>
-          <div class="room-details">16 schools | Grades 3–4<br/>Hands-on programming concepts</div>
-        </div>
-        <div class="room-card active">
-          <div class="room-number">Room 4</div>
-          <div class="room-activity">Innovation Challenge</div>
-          <div class="room-details">15 schools | Grades 5–9<br/>Micro:bit smart home prototypes</div>
-        </div>
-        <div class="room-card active">
-          <div class="room-number">Room 5</div>
-          <div class="room-activity">goIT Challenge</div>
-          <div class="room-details">20 schools | Grades 8–9<br/>App development presentations</div>
-        </div>
-        <div class="room-card active">
-          <div class="room-number">Room 6</div>
-          <div class="room-activity">Career & Innovation Expo</div>
-          <div class="room-details">All day: 09:30 – 15:30<br/>Universities, tech companies, publishers</div>
-        </div>
+        <div class="room-card active"><div class="room-number">Room 1</div><div class="room-activity">Drone Challenge</div><div class="room-details">20 schools | Grades 10–12<br/>Also: Opening & Closing ceremonies</div></div>
+        <div class="room-card active"><div class="room-number">Room 2</div><div class="room-activity">Spike Prime Challenge</div><div class="room-details">20 schools | Grades 6–10<br/>LEGO robotics competition</div></div>
+        <div class="room-card active"><div class="room-number">Room 3</div><div class="room-activity">Unplugged Coding</div><div class="room-details">16 schools | Grades 3–4<br/>Hands-on programming concepts</div></div>
+        <div class="room-card active"><div class="room-number">Room 4</div><div class="room-activity">Innovation Challenge</div><div class="room-details">15 schools | Grades 5–9<br/>Micro:bit smart home prototypes</div></div>
+        <div class="room-card active"><div class="room-number">Room 5</div><div class="room-activity">goIT Challenge</div><div class="room-details">20 schools | Grades 8–9<br/>App development presentations</div></div>
+        <div class="room-card active"><div class="room-number">Room 6</div><div class="room-activity">Career & Innovation Expo</div><div class="room-details">All day: 09:30 – 15:30<br/>Universities, tech companies, publishers</div></div>
       </div>
-
       <div style="text-align:center;margin-top:2rem;">
-        <a href="https://maps.app.goo.gl/26kW8BzmQQ8S5q4o8" target="_blank" rel="noopener"
-           style="color:var(--brand-a);text-decoration:none;font-weight:bold;">
-          📍 View Full Campus Map & Directions
-        </a>
+        <a href="https://maps.app.goo.gl/26kW8BzmQQ8S5q4o8" target="_blank" rel="noopener" style="color:var(--brand-a);text-decoration:none;font-weight:700">📍 View Full Campus Map & Directions</a>
       </div>
     </div>
   </div>
 
   <script>
-    /* ------------------ Tabs ------------------ */
-    function switchTab(tabName, el) {
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById(tabName).classList.add('active');
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    /* ---------- Tabs ---------- */
+    function switchTab(id, el){
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
       if (el) el.classList.add('active');
     }
 
-    /* -------- Event status with timezone (SAST) -------- */
-    function updateEventStatus() {
-      const now = new Date();
-      const eventStart = new Date('2025-09-06T07:30:00+02:00');
-      const eventEnd   = new Date('2025-09-06T16:30:00+02:00');
-      const liveStatus = document.getElementById('liveStatus');
-      liveStatus.textContent = now < eventStart ? 'EVENT STARTS SOON'
-                          : now > eventEnd   ? 'EVENT COMPLETED'
-                          : 'EVENT LIVE';
+    /* ---------- Event Status (SAST) ---------- */
+    function updateEventStatus(){
+      const now=new Date();
+      const start=new Date('2025-09-06T07:30:00+02:00');
+      const end=new Date('2025-09-06T16:30:00+02:00');
+      const el=document.getElementById('liveStatus');
+      el.textContent = now<start ? 'EVENT STARTS SOON' : now>end ? 'EVENT COMPLETED' : 'EVENT LIVE';
     }
 
-    /* -------- Google Sheets (GViz, read-only) -------- */
-    const SHEET_ID = '1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
-    const UPDATES_TABS = ['Updates','updates','Sheet1']; // try in this order
-    const RESULTS_TABS = ['Results','results','Scores','scores']; // flexible
+    /* ---------- GViz fetch helpers ---------- */
+    const SHEET_ID='1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
+    const UPDATES_TABS=['Updates','updates','Sheet1'];
+    const RESULTS_TABS=['Results','results','Scores','scores'];
 
-    // Fetch GViz JSON robustly, with cache-busting
-    async function fetchGvizRows(tabNames) {
-      const urls = [
-        ...tabNames.map(n => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(n)}`),
+    async function fetchGvizTable(tabNames){
+      const urls=[
+        ...tabNames.map(n=>`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(n)}`),
         `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
         `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`
       ];
-      let lastErr = null;
-      for (let u of urls) {
-        u += (u.includes('?') ? '&' : '?') + 't=' + Date.now(); // cache-bust
-        try {
-          const res = await fetch(u, { cache: 'no-store' });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const txt = await res.text();
-          const start = txt.indexOf('(') + 1, end = txt.lastIndexOf(')');
-          const data = JSON.parse(txt.slice(start, end));
-          if (data?.table?.rows) return data.table.rows;
-        } catch (e) { lastErr = e; }
+      let lastErr=null;
+      for (let url of urls){
+        url += (url.includes('?')?'&':'?') + 't=' + Date.now(); // cache-bust
+        try{
+          const res=await fetch(url,{cache:'no-store'});
+          if(!res.ok) throw new Error(`HTTP ${res.status}`);
+          const txt=await res.text();
+          const start=txt.indexOf('(')+1, end=txt.lastIndexOf(')');
+          const data=JSON.parse(txt.slice(start,end));
+          if (data?.table?.rows) return data.table; // {cols, rows}
+        }catch(e){ lastErr=e; }
       }
       throw lastErr || new Error('GViz fetch failed');
     }
 
-    // Prefer formatted value; normalize GViz time/timeofday/Date() formats
-    function fmtTimestamp(cell) {
-      if (!cell) return '';
-      if (cell.f) return String(cell.f); // formatted string
-      const v = cell.v;
-      if (Array.isArray(v) && v.length >= 2) { // timeofday -> [h,m,s,ms]
-        const [h,m] = v; return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+    function norm(s){ return String(s??'').trim().toLowerCase(); }
+
+    /* ---------- Updates ---------- */
+    function fmtTimestamp(cell){
+      if(!cell) return '';
+      if(cell.f) return String(cell.f);
+      const v=cell.v;
+      if(Array.isArray(v) && v.length>=2){const[h,m]=v;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');}
+      if(typeof v==='string' && /^Date\(/.test(v)){
+        const m=v.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),/); if(m){return `${String(+m[4]).padStart(2,'0')}:${String(+m[5]).padStart(2,'0')}`;}
       }
-      if (typeof v === 'string' && /^Date\(/.test(v)) { // Date(YYYY,MM,DD,hh,mm,ss)
-        const m = v.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)/);
-        if (m) { const hh = String(+m[4]).padStart(2,'0'); const mm = String(+m[5]).padStart(2,'0'); return `${hh}:${mm}`; }
-      }
-      if (typeof v === 'number') { // Excel serial
-        const ms = Math.round((v - 25569) * 86400 * 1000); const d = new Date(ms);
-        return d.toTimeString().slice(0,5);
-      }
-      return String(v ?? '');
+      if(typeof v==='number'){const ms=Math.round((v-25569)*86400*1000); const d=new Date(ms); return d.toTimeString().slice(0,5);}
+      return String(v??'');
     }
 
-    /* -------- Live Updates rendering -------- */
-    async function refreshLiveUpdates() {
-      const statusBar = document.getElementById('statusBar');
-      try {
-        const rows = await fetchGvizRows(UPDATES_TABS);
-        renderUpdates(rows);
-        statusBar.className = 'status-bar';
-        statusBar.textContent = `✅ Connected • Last updated ${new Date().toLocaleTimeString()}`;
-      } catch (e) {
+    async function refreshLiveUpdates(){
+      const bar=document.getElementById('statusBar');
+      try{
+        const table=await fetchGvizTable(UPDATES_TABS);
+        renderUpdates(table.rows);
+        bar.className='status-bar';
+        bar.textContent=`✅ Connected • Last updated ${new Date().toLocaleTimeString()}`;
+      }catch(e){
         console.error(e);
-        statusBar.className = 'status-bar warning';
-        statusBar.textContent = `⚠️ Connection issue • Using fallback at ${new Date().toLocaleTimeString()}`;
+        bar.className='status-bar warning';
+        bar.textContent=`⚠️ Connection issue • Using fallback at ${new Date().toLocaleTimeString()}`;
       }
     }
 
-    function renderUpdates(rows) {
-      const list = document.getElementById('liveUpdatesList');
-      const header = rows[0]?.c?.map(c => String(c?.v ?? '').toLowerCase());
-      const hasHeader = header && header.includes('timestamp') && header.includes('message');
-      const data = rows.slice(hasHeader ? 1 : 0);
-
-      list.querySelectorAll('.update-item.from-sheets').forEach(n => n.remove());
-
-      data.forEach(r => {
-        const c = r.c || [];
-        const timestamp = fmtTimestamp(c[0]);
-        const type = (c[1]?.v || 'general').toLowerCase();
-        const location = c[2]?.v || '';
-        const message = c[3]?.v || '';
-        const priority = (c[4]?.v || 'normal').toLowerCase();
-        if (!message) return;
-
-        const div = document.createElement('div');
-        div.className = `update-item from-sheets ${priority === 'urgent' ? 'urgent' : ''}`;
-        const locHtml = location ? `<strong>${String(location).toUpperCase()}:</strong> ` : '';
-        const typePrefix = type && type !== 'general' && !location ? `<strong>${type.toUpperCase()}:</strong> ` : '';
-        div.innerHTML = `
-          <div class="update-time">${timestamp || ''}${priority === 'urgent' ? ' - URGENT' : ''}</div>
-          <div class="update-text">${locHtml || typePrefix}${message}</div>
-        `;
+    function renderUpdates(rows){
+      const list=document.getElementById('liveUpdatesList');
+      // keep all rows; GViz already uses cols as headers
+      list.querySelectorAll('.update-item.from-sheets').forEach(n=>n.remove());
+      rows.forEach(r=>{
+        const c=r.c||[];
+        const timestamp=fmtTimestamp(c[0]);
+        const type=(c[1]?.v||'general').toLowerCase();
+        const location=c[2]?.v||'';
+        const message=c[3]?.v||'';
+        const priority=(c[4]?.v||'normal').toLowerCase();
+        if(!message) return;
+        const div=document.createElement('div');
+        div.className=`update-item from-sheets ${priority==='urgent'?'urgent':''}`;
+        const locHtml=location?`<strong>${String(location).toUpperCase()}:</strong> `:'';
+        const typePrefix=type && type!=='general' && !location ? `<strong>${type.toUpperCase()}:</strong> `:'';
+        div.innerHTML=`<div class="update-time">${timestamp || ''}${priority==='urgent'?' - URGENT':''}</div>
+                       <div class="update-text">${locHtml || typePrefix}${message}</div>`;
         list.prepend(div);
       });
     }
 
-    /* -------- Results rendering -------- */
-    async function refreshResults() {
-      const bar = document.getElementById('resultsStatus');
-      const grid = document.getElementById('resultsGrid');
-      try {
-        const rows = await fetchGvizRows(RESULTS_TABS);
-        renderResults(rows, grid);
-        bar.className = 'status-bar';
-        bar.textContent = `✅ Results synced • ${new Date().toLocaleTimeString()}`;
-      } catch (e) {
+    /* ---------- Results ---------- */
+    async function refreshResults(){
+      const bar=document.getElementById('resultsStatus');
+      const grid=document.getElementById('resultsGrid');
+      try{
+        const table=await fetchGvizTable(RESULTS_TABS); // get cols + rows
+        renderResults(table, grid);
+        bar.className='status-bar';
+        bar.textContent=`✅ Results synced • ${new Date().toLocaleTimeString()}`;
+      }catch(e){
         console.error(e);
-        bar.className = 'status-bar warning';
-        bar.textContent = `⚠️ Couldn’t load latest results • ${new Date().toLocaleTimeString()}`;
+        bar.className='status-bar warning';
+        bar.textContent=`⚠️ Couldn’t load latest results • ${new Date().toLocaleTimeString()}`;
       }
     }
 
-    function norm(s){ return String(s ?? '').trim().toLowerCase(); }
     function toOrdinal(n){
-      n = Number(n);
-      if (!Number.isFinite(n)) return '';
-      const v = n % 100;
-      if (v >= 11 && v <= 13) return n + 'th';
-      switch (n % 10){ case 1: return n+'st'; case 2: return n+'nd'; case 3: return n+'rd'; default: return n+'th'; }
+      n=Number(n); if(!Number.isFinite(n)) return '';
+      const v=n%100; if(v>=11 && v<=13) return n+'th';
+      switch(n%10){case 1:return n+'st';case 2:return n+'nd';case 3:return n+'rd';default:return n+'th'}
     }
 
-    function renderResults(rows, gridEl){
-      // map headers to indices (support synonyms)
-      const headerCells = rows[0]?.c || [];
-      const H = headerCells.map(c => norm(c?.v));
-      const idx = {
-        challenge: H.findIndex(h => ['challenge','event','category'].includes(h)),
-        position:  H.findIndex(h => ['position','rank','place'].includes(h)),
-        team:      H.findIndex(h => ['team','team name','teamname'].includes(h)),
-        school:    H.findIndex(h => ['school','organisation','organization'].includes(h)),
-        score:     H.findIndex(h => ['score','points','mark','marks'].includes(h)),
-        status:    H.findIndex(h => ['status','state'].includes(h)),
+    function renderResults(table, gridEl){
+      const labels=(table.cols||[]).map(col=>norm(col.label).replace(/\(.*?\)/g,'').trim());
+      const idx={
+        challenge: labels.findIndex(h=>['challenge','event','category'].includes(h)),
+        position:  labels.findIndex(h=>['position','rank','place'].includes(h)),
+        team:      labels.findIndex(h=>['team','team name','teamname'].includes(h)),
+        school:    labels.findIndex(h=>['school','organisation','organization'].includes(h)),
+        score:     labels.findIndex(h=>['score','points','mark','marks'].includes(h)),
+        status:    labels.findIndex(h=>['status','state'].includes(h)),
       };
 
-      const data = rows.slice(1).map(r => {
-        const c = r.c || [];
-        // coerce values
-        const challenge = c[idx.challenge]?.v ?? '';
-        const posRaw = c[idx.position]?.v ?? '';
-        const position = Number(posRaw);
-        const team = c[idx.team]?.v ?? '';
-        const school = c[idx.school]?.v ?? '';
-        const score = Number(c[idx.score]?.v ?? NaN);
-        const status = norm(c[idx.status]?.v ?? '');
-        return { challenge, position, team, school, score, status };
-      }).filter(x => x.challenge || x.team || Number.isFinite(x.score));
+      const rows=(table.rows||[]).map(r=>{
+        const c=r.c||[];
+        return {
+          challenge: c[idx.challenge]?.v ?? '',
+          position:  Number(c[idx.position]?.v ?? NaN),
+          team:      c[idx.team]?.v ?? '',
+          school:    c[idx.school]?.v ?? '',
+          score:     Number(c[idx.score]?.v ?? NaN),
+          status:    norm(c[idx.status]?.v ?? '')
+        };
+      }).filter(x=>x.challenge || x.team || Number.isFinite(x.score));
 
       // group by challenge
-      const groups = {};
-      for (const row of data){
-        const key = row.challenge || 'Untitled';
-        (groups[key] ||= []).push(row);
-      }
+      const groups={};
+      for(const r of rows){ (groups[r.challenge||'Untitled'] ||= []).push(r); }
 
-      // clear and render
-      gridEl.innerHTML = '';
-
-      if (!Object.keys(groups).length){
-        const empty = document.createElement('div');
-        empty.className = 'card';
-        empty.innerHTML = '<p style="opacity:.85">No results yet. They will appear here as judges publish scores.</p>';
+      gridEl.innerHTML='';
+      if(!Object.keys(groups).length){
+        const empty=document.createElement('div');
+        empty.className='card';
+        empty.innerHTML='<p style="opacity:.85">No results yet. They will appear here as judges publish scores.</p>';
         gridEl.appendChild(empty);
         return;
       }
 
-      for (const [challenge, items] of Object.entries(groups)){
-        // determine status precedence
-        let status = 'upcoming';
-        if (items.some(i => i.status === 'live')) status = 'live';
-        else if (items.some(i => i.status === 'complete')) status = 'complete';
+      for(const [challenge, items] of Object.entries(groups)){
+        let status='upcoming';
+        if(items.some(i=>i.status==='live')) status='live';
+        else if(items.some(i=>i.status==='complete')) status='complete';
 
-        // sort: by position asc if valid, else by score desc
-        const withPos = items.filter(i => Number.isFinite(i.position));
-        const withoutPos = items.filter(i => !Number.isFinite(i.position));
-        withPos.sort((a,b) => a.position - b.position);
-        withoutPos.sort((a,b) => (isNaN(b.score)?-Infinity:b.score) - (isNaN(a.score)?-Infinity:a.score));
-        const sorted = withPos.concat(withoutPos);
+        const withPos=items.filter(i=>Number.isFinite(i.position)).sort((a,b)=>a.position-b.position);
+        const withoutPos=items.filter(i=>!Number.isFinite(i.position)).sort((a,b)=>(isNaN(b.score)?-Infinity:b.score)-(isNaN(a.score)?-Infinity:a.score));
+        const sorted=withPos.concat(withoutPos);
 
-        const card = document.createElement('div');
-        card.className = 'result-card';
-        card.innerHTML = `
-          <div class="result-header">
-            <div class="result-title">${challenge}</div>
-            <div class="result-status ${status}">${status.toUpperCase()}</div>
-          </div>
-          <ul class="leaderboard"></ul>
-        `;
-        const ul = card.querySelector('.leaderboard');
+        const card=document.createElement('div');
+        card.className='result-card';
+        card.innerHTML=`<div class="result-header">
+                          <div class="result-title">${challenge}</div>
+                          <div class="result-status ${status}">${status.toUpperCase()}</div>
+                        </div>
+                        <ul class="leaderboard"></ul>`;
+        const ul=card.querySelector('.leaderboard');
 
-        for (const row of sorted){
-          const li = document.createElement('li');
-          const posLabel = Number.isFinite(row.position) ? `${toOrdinal(row.position)} - ` : '';
-          const scoreLabel = Number.isFinite(row.score) ? row.score : '—';
-          li.innerHTML = `
-            <div class="team-info">
-              <div class="team-name">${posLabel}${row.team || 'Unnamed team'}</div>
-              <div class="team-school">${row.school || ''}</div>
-            </div>
-            <div class="team-score">${scoreLabel}</div>
-          `;
+        for(const row of sorted){
+          const li=document.createElement('li');
+          const posLabel=Number.isFinite(row.position)?`${toOrdinal(row.position)} - `:'';
+          const scoreLabel=Number.isFinite(row.score)?row.score:'—';
+          li.innerHTML=`<div class="team-info">
+                          <div class="team-name">${posLabel}${row.team || 'Unnamed team'}</div>
+                          <div class="team-school">${row.school || ''}</div>
+                        </div>
+                        <div class="team-score">${scoreLabel}</div>`;
           ul.appendChild(li);
         }
-
         gridEl.appendChild(card);
       }
     }
 
-    /* -------- Init & timers -------- */
-    document.addEventListener('DOMContentLoaded', () => {
+    /* ---------- Init ---------- */
+    document.addEventListener('DOMContentLoaded', ()=>{
       updateEventStatus();
       refreshLiveUpdates();
       refreshResults();
-      setInterval(updateEventStatus, 60_000);   // every minute
-      setInterval(refreshLiveUpdates, 30_000);  // every 30s
-      setInterval(refreshResults, 30_000);      // every 30s
+      setInterval(updateEventStatus, 60_000);
+      setInterval(refreshLiveUpdates, 30_000);
+      setInterval(refreshResults, 30_000);
     });
   </script>
 </body>
