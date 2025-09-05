@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EdenX Live Dashboard</title>
   
   <style>
@@ -25,8 +25,6 @@
       background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
       color: white;
       min-height: 100vh;
-      padding: 0;
-      margin: 0;
     }
     
     /* Header */
@@ -39,7 +37,6 @@
       z-index: 100;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
     .header-content {
       display: flex;
       justify-content: space-between;
@@ -47,344 +44,104 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--brand-a);
-    }
-    
+    .logo { font-size: 1.5rem; font-weight: bold; color: var(--brand-a); }
     .live-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--danger);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: bold;
+      display: flex; align-items: center; gap: .5rem;
+      background: var(--danger); padding: .5rem 1rem; border-radius: 20px;
+      font-size: .9rem; font-weight: bold;
     }
-    
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background: white;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    
-    /* Navigation Tabs */
+    .live-dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+    /* Tabs */
     .nav-tabs {
-      display: flex;
-      background: rgba(255,255,255,0.1);
-      margin: 1rem;
-      border-radius: var(--radius);
-      padding: 4px;
-      gap: 4px;
-      overflow-x: auto;
+      display: flex; background: rgba(255,255,255,0.1);
+      margin: 1rem; border-radius: var(--radius); padding: 4px; gap: 4px; overflow-x: auto;
     }
-    
     .tab-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: calc(var(--radius) - 4px);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      white-space: nowrap;
-      min-width: max-content;
+      flex: 1; background: none; border: none; color: #fff; padding: .75rem 1rem;
+      border-radius: calc(var(--radius) - 4px); font-weight: 600; cursor: pointer;
+      transition: .2s; white-space: nowrap; min-width: max-content;
     }
-    
-    .tab-btn.active {
-      background: var(--brand-a);
-      color: var(--dark);
-    }
-    
-    .tab-btn:hover:not(.active) {
-      background: rgba(255,255,255,0.1);
-    }
-    
-    /* Tab Content */
-    .tab-content {
-      display: none;
-      padding: 0 1rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .tab-content.active {
-      display: block;
-    }
-    
-    /* Quick Status Bar */
+    .tab-btn.active { background: var(--brand-a); color: var(--dark); }
+    .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.1); }
+
+    /* Content */
+    .tab-content { display: none; padding: 0 1rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    /* Status bar */
     .status-bar {
       background: linear-gradient(90deg, var(--success), #059669);
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-radius: var(--radius);
-      text-align: center;
-      font-weight: bold;
+      padding: 1rem; margin-bottom: 1.5rem; border-radius: var(--radius);
+      text-align: center; font-weight: bold;
     }
-    
     .status-bar.warning { background: linear-gradient(90deg, var(--warning), #d97706); }
     .status-bar.danger { background: linear-gradient(90deg, var(--danger), #dc2626); }
-    
+
     /* Cards */
     .card {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem;
       border: 1px solid rgba(255,255,255,0.2);
     }
-    
-    .card h3 {
-      color: var(--brand-a);
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-    
-    /* Live Updates */
+    .card h3 { color: var(--brand-a); margin-bottom: 1rem; font-size: 1.3rem; }
+
+    /* Updates */
     .update-item {
       background: rgba(255,255,255,0.05);
-      padding: 1rem;
-      border-radius: var(--radius);
-      margin-bottom: 0.75rem;
-      border-left: 4px solid var(--brand-a);
+      padding: 1rem; border-radius: var(--radius); margin-bottom: .75rem; border-left: 4px solid var(--brand-a);
     }
-    
-    .update-item.urgent {
-      border-left-color: var(--danger);
-      background: rgba(239, 68, 68, 0.1);
-    }
-    
-    .update-time {
-      color: var(--brand-a);
-      font-weight: bold;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .update-text {
-      line-height: 1.5;
-    }
-    
-    /* Results */
-    .results-grid {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    .result-card {
-      background: rgba(255,255,255,0.1);
-      border-radius: var(--radius);
-      padding: 1rem;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    .result-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    
-    .result-title {
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-    
-    .result-status {
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-    
+    .update-item.urgent { border-left-color: var(--danger); background: rgba(239,68,68,.1); }
+    .update-time { color: var(--brand-a); font-weight: bold; font-size: .9rem; margin-bottom: .5rem; }
+    .update-text { line-height: 1.5; }
+
+    /* Results (static placeholder for now) */
+    .results-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
+    .result-card { background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1rem; border: 1px solid rgba(255,255,255,0.2); }
+    .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .result-title { font-weight: bold; font-size: 1.1rem; }
+    .result-status { padding: .25rem .75rem; border-radius: 20px; font-size: .8rem; font-weight: bold; }
     .result-status.live { background: var(--danger); }
     .result-status.complete { background: var(--success); }
     .result-status.upcoming { background: var(--warning); color: var(--dark); }
-    
-    .leaderboard {
-      list-style: none;
-    }
-    
-    .leaderboard li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .leaderboard li:last-child {
-      border-bottom: none;
-    }
-    
-    .team-info {
-      flex: 1;
-    }
-    
-    .team-name {
-      font-weight: bold;
-      margin-bottom: 0.2rem;
-    }
-    
-    .team-school {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-    
-    .team-score {
-      font-weight: bold;
-      color: var(--brand-a);
-      font-size: 1.1rem;
-    }
-    
+    .leaderboard { list-style: none; }
+    .leaderboard li { display:flex; justify-content:space-between; align-items:center; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.1); }
+    .leaderboard li:last-child{border-bottom:0}
+    .team-info{flex:1}
+    .team-name{font-weight:bold;margin-bottom:.2rem}
+    .team-school{font-size:.9rem;opacity:.8}
+    .team-score{font-weight:bold;color:var(--brand-a);font-size:1.1rem}
+
     /* Schedule */
-    .timeline {
-      position: relative;
-    }
-    
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 20px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--brand-a);
-    }
-    
-    .timeline-item {
-      display: flex;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    
-    .timeline-dot {
-      width: 12px;
-      height: 12px;
-      background: var(--brand-a);
-      border-radius: 50%;
-      margin: 0.5rem 1rem 0 14px;
-      z-index: 2;
-      flex-shrink: 0;
-    }
-    
-    .timeline-dot.active {
-      background: var(--success);
-      animation: pulse-dot 2s infinite;
-    }
-    
-    @keyframes pulse-dot {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-    }
-    
-    .timeline-content {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-      border-radius: var(--radius);
-    }
-    
-    .timeline-content.active {
-      background: rgba(16, 185, 129, 0.2);
-      border: 1px solid var(--success);
-    }
-    
-    .timeline-time {
-      color: var(--brand-a);
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-    
-    .timeline-event {
-      font-weight: bold;
-      margin-bottom: 0.3rem;
-    }
-    
-    .timeline-venue {
-      font-size: 0.9rem;
-      opacity: 0.8;
-      margin-bottom: 0.5rem;
-    }
-    
-    /* Venue Map */
-    .venue-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    
-    .room-card {
-      background: rgba(255,255,255,0.1);
-      padding: 1rem;
-      border-radius: var(--radius);
-      text-align: center;
-      border: 2px solid transparent;
-      transition: all 0.3s;
-    }
-    
-    .room-card.active {
-      border-color: var(--success);
-      background: rgba(16, 185, 129, 0.2);
-    }
-    
-    .room-number {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--brand-a);
-      margin-bottom: 0.5rem;
-    }
-    
-    .room-activity {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-    
-    .room-details {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-    
+    .timeline { position: relative; }
+    .timeline::before { content:""; position:absolute; left:20px; top:0; bottom:0; width:2px; background: var(--brand-a); }
+    .timeline-item { display:flex; margin-bottom:1.5rem; position:relative; }
+    .timeline-dot { width:12px; height:12px; background: var(--brand-a); border-radius:50%; margin: .5rem 1rem 0 14px; z-index:2; flex-shrink:0; }
+    .timeline-dot.active { background: var(--success); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)} 50%{box-shadow:0 0 0 10px rgba(16,185,129,0)} }
+    .timeline-content { flex:1; background: rgba(255,255,255,.05); padding:1rem; border-radius: var(--radius); }
+    .timeline-content.active { background: rgba(16,185,129,.2); border:1px solid var(--success); }
+    .timeline-time { color: var(--brand-a); font-weight:bold; margin-bottom:.5rem; }
+    .timeline-event { font-weight:bold; margin-bottom:.3rem; }
+    .timeline-venue { font-size:.9rem; opacity:.8; margin-bottom:.5rem; }
+
+    /* Venue */
+    .venue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .room-card { background: rgba(255,255,255,0.1); padding:1rem; border-radius: var(--radius); text-align:center; border:2px solid transparent; transition:.2s; }
+    .room-card.active { border-color: var(--success); background: rgba(16,185,129,.2); }
+    .room-number{font-size:2rem;font-weight:bold;color:var(--brand-a);margin-bottom:.5rem}
+    .room-activity{font-weight:bold;margin-bottom:.5rem}
+    .room-details{font-size:.9rem;opacity:.8}
+
     /* Responsive */
     @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .nav-tabs {
-        margin: 1rem 0.5rem;
-      }
-      
-      .tab-content {
-        padding: 0 0.5rem 2rem;
-      }
-      
-      .venue-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .timeline::before {
-        left: 10px;
-      }
-      
-      .timeline-dot {
-        margin-left: 4px;
-      }
+      .header-content { flex-direction: column; gap: 1rem; }
+      .nav-tabs { margin: 1rem .5rem; }
+      .tab-content { padding: 0 .5rem 2rem; }
+      .venue-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 10px; }
+      .timeline-dot { margin-left: 4px; }
     }
   </style>
 </head>
@@ -395,52 +152,42 @@
       <div class="logo">EdenX Live Dashboard</div>
       <div class="live-indicator">
         <div class="live-dot"></div>
-        <span id="liveStatus">EVENT LIVE</span>
+        <span id="liveStatus">EVENT STARTS SOON</span>
       </div>
     </div>
   </header>
 
-  <!-- Navigation Tabs -->
+  <!-- Tabs -->
   <nav class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('updates')">Live Updates</button>
-    <button class="tab-btn" onclick="switchTab('results')">Results</button>
-    <button class="tab-btn" onclick="switchTab('schedule')">Schedule</button>
-    <button class="tab-btn" onclick="switchTab('venue')">Venue Map</button>
+    <button class="tab-btn active" onclick="switchTab('updates', this)">Live Updates</button>
+    <button class="tab-btn" onclick="switchTab('results', this)">Results</button>
+    <button class="tab-btn" onclick="switchTab('schedule', this)">Schedule</button>
+    <button class="tab-btn" onclick="switchTab('venue', this)">Venue Map</button>
   </nav>
 
-  <!-- Live Updates Tab -->
+  <!-- Live Updates -->
   <div class="tab-content active" id="updates">
-    <div class="status-bar" id="statusBar">
-      🔴 All competitions are currently running across Rooms 1-5 | Career Expo open in Room 6
+    <div class="status-bar" id="statusBar" aria-live="polite">
+      Connecting to live data…
     </div>
-    
+
     <div class="card">
       <h3>Latest Updates</h3>
       <div id="liveUpdatesList">
+        <!-- Fallback static items (kept as backup if Sheets is down) -->
         <div class="update-item urgent">
           <div class="update-time">10:45 AM - URGENT</div>
-          <div class="update-text"><strong>Room 4 - Innovation Challenge:</strong> Technical issue resolved. All teams back to prototyping!</div>
+          <div class="update-text"><strong>ROOM 4 - INNOVATION:</strong> Technical issue resolved. All teams back to prototyping!</div>
         </div>
-        
         <div class="update-item">
           <div class="update-time">10:30 AM</div>
-          <div class="update-text"><strong>Career Expo:</strong> UWC booth offering on-the-spot bursary applications. Queue forming!</div>
-        </div>
-        
-        <div class="update-item">
-          <div class="update-time">10:15 AM</div>
-          <div class="update-text"><strong>Room 1 - Drone Challenge:</strong> Spectacular precision flying demonstrations. Crowd favourites emerging!</div>
-        </div>
-        
-        <div class="update-item">
-          <div class="update-time">10:00 AM</div>
-          <div class="update-text"><strong>All Competitions:</strong> Morning session officially started! 91 schools competing across 5 challenges.</div>
+          <div class="update-text"><strong>CAREER EXPO:</strong> UWC booth offering on-the-spot bursary applications. Queue forming!</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Results Tab -->
+  <!-- Results (static example; dynamic wiring comes next) -->
   <div class="tab-content" id="results">
     <div class="results-grid">
       <div class="result-card">
@@ -463,58 +210,15 @@
             </div>
             <div class="team-score">91.2</div>
           </li>
-          <li>
-            <div class="team-info">
-              <div class="team-name">3rd - Smart Solutions</div>
-              <div class="team-school">George High School</div>
-            </div>
-            <div class="team-score">89.8</div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">Drone Challenge</div>
-          <div class="result-status live">LIVE</div>
-        </div>
-        <ul class="leaderboard">
-          <li>
-            <div class="team-info">
-              <div class="team-name">1st - Sky Masters</div>
-              <div class="team-school">Framesby High</div>
-            </div>
-            <div class="team-score">96.3</div>
-          </li>
-          <li>
-            <div class="team-info">
-              <div class="team-name">2nd - Aerial Aces</div>
-              <div class="team-school">Eden High School</div>
-            </div>
-            <div class="team-score">93.7</div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">goIT Challenge</div>
-          <div class="result-status upcoming">PRESENTATIONS 11:00</div>
-        </div>
-        <ul class="leaderboard">
-          <li>
-            <div class="team-info">
-              <div class="team-name">App development in progress</div>
-              <div class="team-school">20 schools participating</div>
-            </div>
-            <div class="team-score">TBD</div>
-          </li>
         </ul>
       </div>
     </div>
+    <div class="card">
+      <p style="opacity:.8">Results will be wired to Google Sheets after we lock down the Updates flow.</p>
+    </div>
   </div>
 
-  <!-- Schedule Tab -->
+  <!-- Schedule -->
   <div class="tab-content" id="schedule">
     <div class="card">
       <h3>Today's Schedule</h3>
@@ -544,7 +248,7 @@
           <div class="timeline-content active">
             <div class="timeline-time">09:50 - 13:00</div>
             <div class="timeline-event">Morning Competition Sessions</div>
-            <div class="timeline-venue">Rooms 1-5</div>
+            <div class="timeline-venue">Rooms 1–5</div>
             <p>All 5 challenges running in parallel</p>
           </div>
         </div>
@@ -565,7 +269,7 @@
             <div class="timeline-time">13:40 - 15:45</div>
             <div class="timeline-event">Afternoon Sessions</div>
             <div class="timeline-venue">Rooms 1, 2, 4</div>
-            <p>Final rounds for 3 challenges</p>
+            <p>Final rounds for select challenges</p>
           </div>
         </div>
 
@@ -582,7 +286,7 @@
     </div>
   </div>
 
-  <!-- Venue Map Tab -->
+  <!-- Venue Map -->
   <div class="tab-content" id="venue">
     <div class="card">
       <h3>Room Locations & Activities</h3>
@@ -590,43 +294,38 @@
         <div class="room-card active">
           <div class="room-number">Room 1</div>
           <div class="room-activity">Drone Challenge</div>
-          <div class="room-details">20 schools | Grades 10-12<br>Also: Opening & Closing ceremonies</div>
+          <div class="room-details">20 schools | Grades 10–12<br/>Also: Opening & Closing ceremonies</div>
         </div>
-
         <div class="room-card active">
           <div class="room-number">Room 2</div>
           <div class="room-activity">Spike Prime Challenge</div>
-          <div class="room-details">20 schools | Grades 6-10<br>LEGO robotics competition</div>
+          <div class="room-details">20 schools | Grades 6–10<br/>LEGO robotics competition</div>
         </div>
-
         <div class="room-card active">
           <div class="room-number">Room 3</div>
           <div class="room-activity">Unplugged Coding</div>
-          <div class="room-details">16 schools | Grades 3-4<br>Hands-on programming concepts</div>
+          <div class="room-details">16 schools | Grades 3–4<br/>Hands-on programming concepts</div>
         </div>
-
         <div class="room-card active">
           <div class="room-number">Room 4</div>
           <div class="room-activity">Innovation Challenge</div>
-          <div class="room-details">15 schools | Grades 5-9<br>Micro:bit smart home prototypes</div>
+          <div class="room-details">15 schools | Grades 5–9<br/>Micro:bit smart home prototypes</div>
         </div>
-
         <div class="room-card active">
           <div class="room-number">Room 5</div>
           <div class="room-activity">goIT Challenge</div>
-          <div class="room-details">20 schools | Grades 8-9<br>App development presentations</div>
+          <div class="room-details">20 schools | Grades 8–9<br/>App development presentations</div>
         </div>
-
         <div class="room-card active">
           <div class="room-number">Room 6</div>
           <div class="room-activity">Career & Innovation Expo</div>
-          <div class="room-details">All day: 09:30 - 15:30<br>Universities, tech companies, publishers</div>
+          <div class="room-details">All day: 09:30 – 15:30<br/>Universities, tech companies, publishers</div>
         </div>
       </div>
-      
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="https://maps.app.goo.gl/26kW8BzmQQ8S5q4o8" target="_blank" 
-           style="color: var(--brand-a); text-decoration: none; font-weight: bold;">
+
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="https://maps.app.goo.gl/26kW8BzmQQ8S5q4o8" target="_blank" rel="noopener"
+           style="color:var(--brand-a);text-decoration:none;font-weight:bold;">
           📍 View Full Campus Map & Directions
         </a>
       </div>
@@ -634,141 +333,132 @@
   </div>
 
   <script>
-    // Tab switching functionality
-    function switchTab(tabName) {
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-      
-      // Remove active class from all tab buttons
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      // Show selected tab content
+    /* ------------------ Tabs ------------------ */
+    function switchTab(tabName, el) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.getElementById(tabName).classList.add('active');
-      
-      // Activate clicked tab button
-      event.target.classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
     }
 
-    // Google Sheets Configuration - CORRECTED
-    const SHEET_ID = '1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
-    // Try different sheet references if Sheet1 doesn't work
-    const SHEET_URLS = [
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`,
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`
-    ];
-
-    // Auto-refresh functionality with enhanced error handling
-    async function refreshLiveUpdates() {
-      const statusBar = document.getElementById('statusBar');
-      
-      for (let i = 0; i < SHEET_URLS.length; i++) {
-        try {
-          console.log(`Trying URL ${i + 1}:`, SHEET_URLS[i]);
-          
-          const response = await fetch(SHEET_URLS[i]);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-          
-          const text = await response.text();
-          console.log('Raw response:', text.substring(0, 200) + '...');
-          
-          // Parse Google Sheets JSON response
-          const jsonText = text.substring(47).slice(0, -2);
-          const data = JSON.parse(jsonText);
-          
-          if (data.table && data.table.rows) {
-            // Success! Update display
-            updateLiveUpdatesDisplay(data.table.rows);
-            const now = new Date();
-            statusBar.className = 'status-bar';
-            statusBar.innerHTML = `🔴 Last updated: ${now.toLocaleTimeString()} | Connected to live data`;
-            console.log('Successfully loaded data from Google Sheets');
-            return; // Exit function on success
-          }
-          
-        } catch (error) {
-          console.error(`URL ${i + 1} failed:`, error);
-          continue; // Try next URL
-        }
-      }
-      
-      // If all URLs failed
-      console.error('All Google Sheets URLs failed');
-      statusBar.className = 'status-bar warning';
-      statusBar.innerHTML = `⚠️ Connection issue - using cached data | Last attempt: ${new Date().toLocaleTimeString()}`;
-    }
-
-    function updateLiveUpdatesDisplay(rows) {
-      console.log('Updating display with rows:', rows);
-      const updatesList = document.getElementById('liveUpdatesList');
-      
-      if (!rows || rows.length <= 1) {
-        console.log('No data rows found or only header row');
-        return;
-      }
-      
-      // Clear existing dynamic updates (keep the static ones for fallback)
-      const existingUpdates = updatesList.querySelectorAll('.update-item.from-sheets');
-      existingUpdates.forEach(item => item.remove());
-      
-      // Add updates from Google Sheets (skip header row)
-      const dataRows = rows.slice(1); // Skip header row
-      
-      dataRows.forEach((row, index) => {
-        if (row.c && row.c.length >= 4) { // Ensure we have at least 4 columns
-          const timestamp = row.c[0]?.v || '';
-          const type = row.c[1]?.v || 'general';
-          const location = row.c[2]?.v || '';
-          const message = row.c[3]?.v || '';
-          const priority = row.c[4]?.v || 'normal';
-          
-          if (timestamp && message) {
-            const updateItem = document.createElement('div');
-            updateItem.className = `update-item from-sheets ${priority === 'urgent' ? 'urgent' : ''}`;
-            
-            updateItem.innerHTML = `
-              <div class="update-time">${timestamp}${priority === 'urgent' ? ' - URGENT' : ''}</div>
-              <div class="update-text"><strong>${location.toUpperCase()}:</strong> ${message}</div>
-            `;
-            
-            // Insert at the top
-            updatesList.insertBefore(updateItem, updatesList.firstChild);
-          }
-        }
-      });
-    }
-
-    // Update event status based on time
+    /* -------- Event status with timezone (SAST) -------- */
     function updateEventStatus() {
       const now = new Date();
-      const eventStart = new Date('2025-09-06 07:30:00');
-      const eventEnd = new Date('2025-09-06 16:30:00');
+      const eventStart = new Date('2025-09-06T07:30:00+02:00');
+      const eventEnd   = new Date('2025-09-06T16:30:00+02:00');
       const liveStatus = document.getElementById('liveStatus');
-      
-      if (now < eventStart) {
-        liveStatus.textContent = 'EVENT STARTS SOON';
-      } else if (now > eventEnd) {
-        liveStatus.textContent = 'EVENT COMPLETED';
-      } else {
-        liveStatus.textContent = 'EVENT LIVE';
+      liveStatus.textContent = now < eventStart ? 'EVENT STARTS SOON'
+                          : now > eventEnd   ? 'EVENT COMPLETED'
+                          : 'EVENT LIVE';
+    }
+
+    /* -------- Google Sheets (GViz, read-only) -------- */
+    const SHEET_ID = '1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
+    const SHEET_TABS = ['Updates','updates','Sheet1']; // try in this order
+
+    // Fetch GViz JSON robustly, with cache-busting
+    async function fetchGvizRows() {
+      const urls = [
+        ...SHEET_TABS.map(n => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(n)}`),
+        `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`,
+        `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`
+      ];
+      let lastErr = null;
+      for (let u of urls) {
+        u += (u.includes('?') ? '&' : '?') + 't=' + Date.now(); // cache-bust
+        try {
+          const res = await fetch(u, { cache: 'no-store' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const txt = await res.text();
+          const start = txt.indexOf('(') + 1, end = txt.lastIndexOf(')');
+          const data = JSON.parse(txt.slice(start, end));
+          if (data?.table?.rows) return data.table.rows;
+        } catch (e) { lastErr = e; }
+      }
+      throw lastErr || new Error('GViz fetch failed');
+    }
+
+    // Prefer formatted value; normalize GViz time/timeofday/Date() formats
+    function fmtTimestamp(cell) {
+      if (!cell) return '';
+      if (cell.f) return String(cell.f); // Google’s formatted string
+      const v = cell.v;
+
+      // timeofday -> [h,m,s,ms]
+      if (Array.isArray(v) && v.length >= 2) {
+        const [h,m] = v;
+        return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+      }
+      // Date(YYYY,MM,DD,hh,mm,ss)
+      if (typeof v === 'string' && /^Date\(/.test(v)) {
+        const m = v.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)/);
+        if (m) {
+          const hh = String(+m[4]).padStart(2,'0');
+          const mm = String(+m[5]).padStart(2,'0');
+          return `${hh}:${mm}`;
+        }
+      }
+      // Serial number (rare with GViz)
+      if (typeof v === 'number') {
+        const ms = Math.round((v - 25569) * 86400 * 1000);
+        const d = new Date(ms);
+        return d.toTimeString().slice(0,5);
+      }
+      return String(v ?? '');
+    }
+
+    async function refreshLiveUpdates() {
+      const statusBar = document.getElementById('statusBar');
+      try {
+        const rows = await fetchGvizRows();
+        renderUpdates(rows);
+        statusBar.className = 'status-bar';
+        statusBar.textContent = `✅ Connected • Last updated ${new Date().toLocaleTimeString()}`;
+      } catch (e) {
+        console.error(e);
+        statusBar.className = 'status-bar warning';
+        statusBar.textContent = `⚠️ Connection issue • Using fallback at ${new Date().toLocaleTimeString()}`;
       }
     }
 
-    // Initialize
-    updateEventStatus();
-    setInterval(updateEventStatus, 60000); // Update every minute
-    setInterval(refreshLiveUpdates, 30000); // Refresh data every 30 seconds
+    function renderUpdates(rows) {
+      const list = document.getElementById('liveUpdatesList');
 
-    // Initial load
-    document.addEventListener('DOMContentLoaded', function() {
+      // Detect header row (timestamp | type | location | message | priority)
+      const header = rows[0]?.c?.map(c => String(c?.v ?? '').toLowerCase());
+      const hasHeader = header && header.includes('timestamp') && header.includes('message');
+      const data = rows.slice(hasHeader ? 1 : 0);
+
+      // Remove previous dynamic items
+      list.querySelectorAll('.update-item.from-sheets').forEach(n => n.remove());
+
+      data.forEach(r => {
+        const c = r.c || [];
+        const timestamp = fmtTimestamp(c[0]);
+        const type = (c[1]?.v || 'general').toLowerCase();
+        const location = c[2]?.v || '';
+        const message = c[3]?.v || '';
+        const priority = (c[4]?.v || 'normal').toLowerCase();
+        if (!message) return;
+
+        const div = document.createElement('div');
+        div.className = `update-item from-sheets ${priority === 'urgent' ? 'urgent' : ''}`;
+        const locHtml = location ? `<strong>${String(location).toUpperCase()}:</strong> ` : '';
+        const typePrefix = type && type !== 'general' && !location ? `<strong>${type.toUpperCase()}:</strong> ` : '';
+        div.innerHTML = `
+          <div class="update-time">${timestamp || ''}${priority === 'urgent' ? ' - URGENT' : ''}</div>
+          <div class="update-text">${locHtml || typePrefix}${message}</div>
+        `;
+        list.prepend(div); // newest first
+      });
+    }
+
+    /* -------- Init & timers -------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      updateEventStatus();
       refreshLiveUpdates();
+      setInterval(updateEventStatus, 60_000);   // every minute
+      setInterval(refreshLiveUpdates, 30_000);  // every 30s
     });
   </script>
 </body>
