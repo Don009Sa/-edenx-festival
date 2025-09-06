@@ -29,6 +29,7 @@
     .update-item.urgent{border-left-color:var(--danger);background:rgba(239,68,68,.1)}
     .update-time{color:var(--brand-a);font-weight:700;font-size:.9rem;margin-bottom:.5rem}
     .update-text{line-height:1.5}
+    .muted{opacity:.85}
     .results-grid{display:grid;gap:1rem;margin-bottom:2rem}
     .result-card{background:rgba(255,255,255,.1);border-radius:var(--radius);padding:1rem;border:1px solid rgba(255,255,255,.2)}
     .result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
@@ -85,15 +86,7 @@
     <div class="card">
       <h3>Latest Updates</h3>
       <div id="liveUpdatesList">
-        <!-- Fallback examples -->
-        <div class="update-item urgent">
-          <div class="update-time">10:45 AM - URGENT</div>
-          <div class="update-text"><strong>ROOM 4 - INNOVATION:</strong> Technical issue resolved. All teams back to prototyping!</div>
-        </div>
-        <div class="update-item">
-          <div class="update-time">10:30 AM</div>
-          <div class="update-text"><strong>CAREER EXPO:</strong> UWC booth offering on-the-spot bursary applications. Queue forming!</div>
-        </div>
+        <div id="updatesEmpty" class="muted">No updates yet. They will appear here as soon as you add rows in the sheet.</div>
       </div>
     </div>
   </div>
@@ -138,7 +131,7 @@
   </div>
 
   <script>
-    /* ---------- Tabs ---------- */
+    /* Tabs */
     function switchTab(id, el){
       document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
       document.getElementById(id).classList.add('active');
@@ -146,7 +139,7 @@
       if (el) el.classList.add('active');
     }
 
-    /* ---------- Event Status (SAST) ---------- */
+    /* Event status (SAST) */
     function updateEventStatus(){
       const now=new Date();
       const start=new Date('2025-09-06T07:30:00+02:00');
@@ -155,7 +148,7 @@
       el.textContent = now<start ? 'EVENT STARTS SOON' : now>end ? 'EVENT COMPLETED' : 'EVENT LIVE';
     }
 
-    /* ---------- GViz fetch helpers ---------- */
+    /* GViz helpers */
     const SHEET_ID='1loYhSDIhI5dxUBfVwSHalUiPvcQDE8PFo1N-DsH0bZ8';
     const UPDATES_TABS=['Updates','updates','Sheet1'];
     const RESULTS_TABS=['Results','results','Scores','scores'];
@@ -175,7 +168,7 @@
           const txt=await res.text();
           const start=txt.indexOf('(')+1, end=txt.lastIndexOf(')');
           const data=JSON.parse(txt.slice(start,end));
-          if (data?.table?.rows) return data.table; // {cols, rows}
+          if (data?.table?.rows) return data.table;
         }catch(e){ lastErr=e; }
       }
       throw lastErr || new Error('GViz fetch failed');
@@ -183,17 +176,15 @@
 
     function norm(s){ return String(s??'').trim().toLowerCase(); }
 
-    /* ---------- Updates ---------- */
+    /* Live Updates */
     function fmtTimestamp(cell){
       if(!cell) return '';
       if(cell.f) return String(cell.f);
       const v=cell.v;
       if(Array.isArray(v) && v.length>=2){const[h,m]=v;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');}
-      if(typeof v==='string' && /^Date\(/.test(v)){
-        const m=v.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+),/); if(m){return `${String(+m[4]).padStart(2,'0')}:${String(+m[5]).padStart(2,'0')}`;}
-      }
-      if(typeof v==='number'){const ms=Math.round((v-25569)*86400*1000); const d=new Date(ms); return d.toTimeString().slice(0,5);}
-      return String(v??'');
+      if(typeof v==='string') return v.trim();
+      if(typeof v==='number'){ const ms=Math.round((v-25569)*86400*1000); return new Date(ms).toTimeString().slice(0,5); }
+      return '';
     }
 
     async function refreshLiveUpdates(){
@@ -206,15 +197,15 @@
       }catch(e){
         console.error(e);
         bar.className='status-bar warning';
-        bar.textContent=`⚠️ Connection issue • Using fallback at ${new Date().toLocaleTimeString()}`;
+        bar.textContent=`⚠️ Connection issue • ${new Date().toLocaleTimeString()}`;
       }
     }
 
     function renderUpdates(rows){
       const list=document.getElementById('liveUpdatesList');
-      // keep all rows; GViz already uses cols as headers
-      list.querySelectorAll('.update-item.from-sheets').forEach(n=>n.remove());
-      rows.forEach(r=>{
+      list.innerHTML=''; // remove ALL items (gets rid of any placeholders)
+      const valid=[];
+      (rows||[]).forEach(r=>{
         const c=r.c||[];
         const timestamp=fmtTimestamp(c[0]);
         const type=(c[1]?.v||'general').toLowerCase();
@@ -223,21 +214,29 @@
         const priority=(c[4]?.v||'normal').toLowerCase();
         if(!message) return;
         const div=document.createElement('div');
-        div.className=`update-item from-sheets ${priority==='urgent'?'urgent':''}`;
-        const locHtml=location?`<strong>${String(location).toUpperCase()}:</strong> `:'';
-        const typePrefix=type && type!=='general' && !location ? `<strong>${type.toUpperCase()}:</strong> `:'';
+        div.className=`update-item ${priority==='urgent'?'urgent':''}`;
+        const where=location?`<strong>${String(location).toUpperCase()}:</strong> `:(type && type!=='general'?`<strong>${type.toUpperCase()}:</strong> `:'');
         div.innerHTML=`<div class="update-time">${timestamp || ''}${priority==='urgent'?' - URGENT':''}</div>
-                       <div class="update-text">${locHtml || typePrefix}${message}</div>`;
-        list.prepend(div);
+                       <div class="update-text">${where}${message}</div>`;
+        valid.push(div);
       });
+      if(valid.length===0){
+        const empty=document.createElement('div');
+        empty.className='muted';
+        empty.textContent='No updates yet. They will appear here as soon as you add rows in the sheet.';
+        list.appendChild(empty);
+      }else{
+        // newest on top
+        valid.reverse().forEach(node=>list.prepend(node));
+      }
     }
 
-    /* ---------- Results ---------- */
+    /* Results */
     async function refreshResults(){
       const bar=document.getElementById('resultsStatus');
       const grid=document.getElementById('resultsGrid');
       try{
-        const table=await fetchGvizTable(RESULTS_TABS); // get cols + rows
+        const table=await fetchGvizTable(RESULTS_TABS);
         renderResults(table, grid);
         bar.className='status-bar';
         bar.textContent=`✅ Results synced • ${new Date().toLocaleTimeString()}`;
@@ -277,7 +276,6 @@
         };
       }).filter(x=>x.challenge || x.team || Number.isFinite(x.score));
 
-      // group by challenge
       const groups={};
       for(const r of rows){ (groups[r.challenge||'Untitled'] ||= []).push(r); }
 
@@ -285,7 +283,7 @@
       if(!Object.keys(groups).length){
         const empty=document.createElement('div');
         empty.className='card';
-        empty.innerHTML='<p style="opacity:.85">No results yet. They will appear here as judges publish scores.</p>';
+        empty.innerHTML='<p class="muted">No results yet. They will appear here as judges publish scores.</p>';
         gridEl.appendChild(empty);
         return;
       }
@@ -323,7 +321,7 @@
       }
     }
 
-    /* ---------- Init ---------- */
+    /* Init */
     document.addEventListener('DOMContentLoaded', ()=>{
       updateEventStatus();
       refreshLiveUpdates();
