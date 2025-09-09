@@ -13,7 +13,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){dataLayer.push(arguments);} 
     gtag('js', new Date()); gtag('config', 'G-XXXXXXX');
   </script>
   -->
@@ -25,93 +25,68 @@
       --ink-2:#3730a3;
       --brand-a:#00e5ff;
       --brand-b:#e91e63;
-      --plate:#0f1d4b;              /* NEW: darker logo plate */
-      --plate-border:#0c1840;       /* NEW */
-      --nav-bg: rgba(10, 12, 40, .75); /* NEW sticky nav bg */
+      --plate:#0f1d4b;              /* darker logo plate */
+      --plate-border:#0c1840;
+      --nav-bg: rgba(10, 12, 40, .75); /* sticky nav bg */
       --radius:20px;
       --shadow: 0 10px 30px rgba(0,0,0,0.12);
-      scroll-behavior:smooth;       /* NEW: native smooth scroll */
+      scroll-behavior:smooth;       /* native smooth scroll */
     }
     body{ font-family:Arial, sans-serif; line-height:1.6; color:#333; overflow-x:hidden; }
 
-    /* Skip link – NEW accessibility */
-    .skip-link{
-      position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-    }
-    .skip-link:focus{
-      left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; background:#fff; border-radius:.5rem; z-index:9999;
-    }
+    /* Skip link */
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; background:#fff; border-radius:.5rem; z-index:9999; }
 
-    /* Sticky Top Nav – NEW */
-    .topnav{
-      position:sticky; top:0; z-index:999;
-      background:var(--nav-bg); backdrop-filter:saturate(1.2) blur(8px);
-      border-bottom:1px solid rgba(255,255,255,.12);
-    }
-    .topnav-inner{
-      max-width:1200px; margin:0 auto; padding:.6rem 20px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:.5rem; color:#fff; font-weight:bold;
-      letter-spacing:.5px;
-    }
+    /* Sticky Top Nav */
+    .topnav{ position:sticky; top:0; z-index:999; background:var(--nav-bg); backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid rgba(255,255,255,.12); }
+    .topnav-inner{ max-width:1200px; margin:0 auto; padding:.6rem 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:.5rem; color:#fff; font-weight:bold; letter-spacing:.5px; }
     .brand .mark{ color:var(--brand-a); }
     .brand .x{ color:var(--brand-b); }
-    .navlinks{
-      display:flex; gap:18px; flex-wrap:wrap;
-    }
-    .navlinks a{
-      color:#fff; text-decoration:none; font-weight:600; font-size:.95rem; opacity:.9;
-      padding:.4rem .6rem; border-radius:999px;
-    }
+
+    .navlinks{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .navlinks a{ color:#fff; text-decoration:none; font-weight:600; font-size:.95rem; opacity:.95; padding:.45rem .7rem; border-radius:999px; transition: transform .2s, background .2s, opacity .2s; }
     .navlinks a:hover, .navlinks a:focus{ background:rgba(255,255,255,.14); outline:none; }
 
-    /* Anchor offset so headings aren’t hidden behind sticky nav – NEW */
+    /* NEW: special pills for Live + Reflection */
+    .navlinks a.live-pill{ display:inline-flex; align-items:center; gap:.45rem; background:linear-gradient(45deg,#ef4444,#f97316); font-weight:800; }
+    .navlinks a.live-pill .dot{ width:8px; height:8px; border-radius:50%; background:#fff; display:inline-block; box-shadow:0 0 0 0 rgba(255,255,255,.8); animation:pulse 1.8s infinite; }
+    @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .navlinks a.reflect-btn{ background:linear-gradient(45deg,#10B981,#06D6A0); font-weight:800; }
+    .navlinks a.live-pill:hover, .navlinks a.reflect-btn:hover{ transform:translateY(-1px); }
+
+    /* Anchor offset so headings aren’t hidden behind sticky nav */
     section[id]{ scroll-margin-top: 80px; }
 
-    /* Hero Section (original) */
-    .hero{
-      background: linear-gradient(135deg,#1a1464 0%,#2d1b69 30%,#7c2d92 70%,#c21f7a 100%);
-      color:#fff; min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden;
-    }
-    .hero::before{
-      content:""; position:absolute; inset:0;
-      background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="85" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="85" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-      animation:float 20s linear infinite;
-    }
+    /* Hero Section */
+    .hero{ background: linear-gradient(135deg,#1a1464 0%,#2d1b69 30%,#7c2d92 70%,#c21f7a 100%); color:#fff; min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden; }
+    .hero::before{ content:""; position:absolute; inset:0; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="85" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="85" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>') repeat; animation:float 20s linear infinite; }
     @keyframes float{ 0%{transform:translateY(0)} 100%{transform:translateY(-100px)} }
     .hero-content{ max-width:1200px; margin:0 auto; padding:0 20px; display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; position:relative; z-index:1; }
     .hero-text h1{ font-size:4rem; font-weight:bold; margin-bottom:20px; animation:glow 2s ease-in-out infinite alternate; }
     @keyframes glow{ from{filter:drop-shadow(0 0 5px rgba(0,229,255,.5))} to{filter:drop-shadow(0 0 20px rgba(0,229,255,.8))} }
     .hero-text .subtitle{ font-size:2rem; color:#e91e63; margin-bottom:20px; text-transform:uppercase; letter-spacing:3px; text-shadow:0 0 10px rgba(233,30,99,.5); }
     .event-details{ background:rgba(255,255,255,.1); backdrop-filter:blur(10px); border-radius:20px; padding:20px 24px; margin-bottom:16px; border:1px solid rgba(255,255,255,.2); }
-    .event-details h3{ color:#00e5ff; margin-bottom:8px; }
-    .hero-note{ font-size:.95rem; opacity:.95; margin-bottom:24px; background:rgba(255,255,255,.1); display:inline-block; padding:.4rem .7rem; border-radius:999px; border:1px solid rgba(255,255,255,.25); } /* NEW */
+    .event-details h3{ color:var(--brand-a); margin-bottom:8px; }
+    .hero-note{ font-size:.95rem; opacity:.95; margin-bottom:24px; background:rgba(255,255,255,.1); display:inline-block; padding:.4rem .7rem; border-radius:999px; border:1px solid rgba(255,255,255,.25); }
 
-    .cta-button{
-      background: linear-gradient(45deg, #00e5ff, #e91e63); color:#fff; padding:14px 26px; border:none; border-radius:50px; font-size:1rem; font-weight:bold; text-decoration:none; display:inline-block; transition:.3s; cursor:pointer; letter-spacing:1px; box-shadow:0 4px 15px rgba(0,229,255,.3);
-    }
+    .cta-button{ background: linear-gradient(45deg, #00e5ff, #e91e63); color:#fff; padding:14px 26px; border:none; border-radius:50px; font-size:1rem; font-weight:bold; text-decoration:none; display:inline-block; transition:.3s; cursor:pointer; letter-spacing:1px; box-shadow:0 4px 15px rgba(0,229,255,.3); }
     .cta-button:hover{ transform:translateY(-3px); box-shadow:0 10px 30px rgba(233,30,99,.4); }
 
     .hero-visual{ display:flex; justify-content:center; align-items:center; position:relative; }
     .floating-elements{ position:relative; width:500px; height:500px; }
-    .floating-element{
-      position:absolute; background:linear-gradient(45deg,#00e5ff,#e91e63); border-radius:20px; padding:18px; color:#fff; font-weight:bold; animation:floatElement 6s ease-in-out infinite; font-size:.85rem; box-shadow:0 4px 15px rgba(0,229,255,.3);
-    }
+    .floating-element{ position:absolute; background:linear-gradient(45deg,#00e5ff,#e91e63); border-radius:20px; padding:18px; color:#fff; font-weight:bold; animation:floatElement 6s ease-in-out infinite; font-size:.85rem; box-shadow:0 4px 15px rgba(0,229,255,.3); }
     .floating-element:nth-child(1){ top:30px; left:40px; }
     .floating-element:nth-child(2){ top:50px; right:30px; background:linear-gradient(45deg,#10B981,#06D6A0); animation-delay:1s; }
     .floating-element:nth-child(3){ top:50%; left:20px; transform:translateY(-50%); animation-delay:2s; }
     .floating-element:nth-child(4){ bottom:50px; right:40px; animation-delay:3s; }
     .floating-element:nth-child(5){ bottom:80px; left:60px; animation-delay:4s; }
     .floating-element:nth-child(6){ top:50%; right:25px; transform:translateY(-50%); animation-delay:5s; }
-    @keyframes floatElement{
-      0%,100%{ transform:translateY(0) rotate(0) }
-      33%{ transform:translateY(-15px) rotate(3deg) }
-      66%{ transform:translateY(8px) rotate(-3deg) }
-    }
+    @keyframes floatElement{ 0%,100%{ transform:translateY(0) rotate(0) } 33%{ transform:translateY(-15px) rotate(3deg) } 66%{ transform:translateY(8px) rotate(-3deg) } }
 
-    /* Countdown (original) */
+    /* Countdown */
     .countdown{ background:#1e1b4b; color:#fff; padding:60px 0; text-align:center; }
     .countdown h2{ font-size:2.5rem; margin-bottom:30px; color:#00f5ff; }
     .timer{ display:flex; justify-content:center; gap:30px; flex-wrap:wrap; }
@@ -122,7 +97,7 @@
     /* Containers */
     .container{ max-width:1200px; margin:0 auto; padding:0 20px; }
 
-    /* Leadership (original) */
+    /* Leadership */
     .director-messages{ padding:80px 0; background:linear-gradient(135deg,#f8fafc 0%, #e2e8f0 100%); }
     .director-messages h2{ text-align:center; font-size:3rem; margin-bottom:60px; background:linear-gradient(45deg,#1e1b4b,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .messages-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(500px,1fr)); gap:40px; }
@@ -134,7 +109,7 @@
     .director-details p{ color:#64748b; font-size:.9rem; }
     .message-text{ font-size:1.1rem; line-height:1.8; color:#4a5568; font-style:italic; }
 
-    /* Event Focus (original) */
+    /* Event Focus */
     .event-focus{ padding:80px 0; background:linear-gradient(135deg,#1e1b4b 0%, #3730a3 100%); color:#fff; }
     .event-focus h2{ text-align:center; font-size:3rem; margin-bottom:20px; color:#00f5ff; }
     .event-subtitle{ text-align:center; font-size:1.3rem; margin-bottom:60px; color:#e2e8f0; }
@@ -146,7 +121,7 @@
     .focus-button{ background:linear-gradient(45deg,#ff00ff,#00f5ff); color:#fff; padding:12px 30px; border:none; border-radius:25px; font-weight:bold; text-decoration:none; display:inline-block; transition:.3s; }
     .focus-button:hover{ transform:scale(1.05); box-shadow:0 10px 30px rgba(255,0,255,.3); }
 
-    /* Challenges (original, restored) */
+    /* Challenges */
     .challenges{ padding:80px 0; background:linear-gradient(135deg,#f8fafc 0%, #e2e8f0 100%); }
     .challenges h2{ text-align:center; font-size:3rem; margin-bottom:20px; background:linear-gradient(45deg,#1e1b4b,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .challenges-subtitle{ text-align:center; font-size:1.1rem; margin-bottom:60px; color:#64748b; font-style:italic; }
@@ -167,7 +142,7 @@
     .objectives-list li{ padding:5px 0; color:#64748b; font-size:.9rem; }
     .objectives-list li::before{ content:"🚀"; margin-right:8px; }
 
-    /* Expo (original, restored) */
+    /* Expo */
     .career-expo{ padding:80px 0; background:linear-gradient(135deg,#10B981 0%, #06D6A0 100%); color:#fff; }
     .career-expo h2{ text-align:center; font-size:3rem; margin-bottom:20px; color:#fff; }
     .expo-subtitle{ text-align:center; font-size:1.3rem; margin-bottom:60px; color:rgba(255,255,255,.9); }
@@ -181,7 +156,7 @@
     .exhibitor-website{ font-size:.82rem; color:#0d9d76; text-decoration:none; }
     .exhibitor-website:hover{ text-decoration:underline; }
 
-    /* Partners (original, fixed logos) */
+    /* Partners */
     .partners-section{ padding:80px 0; background:linear-gradient(135deg,#f8fafc 0%, #e2e8f0 100%); }
     .partners-section h2{ text-align:center; font-size:3rem; margin-bottom:20px; background:linear-gradient(45deg,#1e1b4b,#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .partners-subtitle{ text-align:center; font-size:1.2rem; margin-bottom:60px; color:#64748b; font-style:italic; }
@@ -189,23 +164,18 @@
     .partner-card{ background:#1e3a8a; color:#fff; border-radius:20px; padding:40px 30px; text-align:center; box-shadow:var(--shadow); transition:.3s; text-decoration:none; border:2px solid transparent; position:relative; overflow:hidden; }
     .partner-card::before{ content:""; position:absolute; inset:0 0 auto 0; height:5px; background:linear-gradient(45deg,#00f5ff,#ff00ff); }
     .partner-card:hover{ transform:translateY(-10px); background:#1d4ed8; border-color:#00f5ff; box-shadow:0 20px 40px rgba(0,245,255,.2); color:#fff; text-decoration:none; }
-    .partner-logo{
-      height:90px; margin-bottom:20px; display:flex; align-items:center; justify-content:center;
-      background: var(--plate);              /* NEW darker plate */
-      border:1px solid var(--plate-border);  /* NEW border */
-      border-radius:12px; padding:10px;
-    }
+    .partner-logo{ height:90px; margin-bottom:20px; display:flex; align-items:center; justify-content:center; background: var(--plate); border:1px solid var(--plate-border); border-radius:12px; padding:10px; }
     .partner-logo img{ max-height:66px; max-width:180px; width:auto; height:auto; object-fit:contain; display:block; }
 
-    /* Footer (original) */
+    /* Footer */
     .footer{ background:#0f172a; color:#fff; padding:40px 0; text-align:center; }
     .footer-content{ max-width:1200px; margin:0 auto; padding:0 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px; }
-    .footer-section h3{ color:#00e5ff; margin-bottom:15px; }
+    .footer-section h3{ color:var(--brand-a); margin-bottom:15px; }
     .footer-section p{ margin-bottom:10px; }
 
-    /* Responsive tweaks (kept) */
+    /* Responsive tweaks */
     @media (max-width:768px){
-      .topnav-inner{ flex-wrap:wrap; justify-content:center; gap:.5rem 1rem; }  /* NEW */
+      .topnav-inner{ flex-wrap:wrap; justify-content:center; gap:.5rem 1rem; }
       .hero-content{ grid-template-columns:1fr; text-align:center; }
       .hero-text h1{ font-size:2.5rem; }
       .hero-text .subtitle{ font-size:1.5rem; }
@@ -232,7 +202,7 @@
 <body>
   <a class="skip-link" href="#home">Skip to content</a>
 
-  <!-- Sticky Nav – NEW -->
+  <!-- Sticky Nav -->
   <nav class="topnav" aria-label="Primary">
     <div class="topnav-inner">
       <div class="brand" aria-label="EdenX brand">
@@ -244,6 +214,11 @@
         <a href="#challenges">Competitions</a>
         <a href="#expo">Expo</a>
         <a href="#partners">Partners</a>
+        <!-- NEW: Live dashboard & Reflection buttons -->
+        <a href="live.html" class="live-pill" aria-label="Open live event dashboard">
+          <span class="dot" aria-hidden="true"></span>Live
+        </a>
+        <a href="https://bit.ly/3JIei8b" target="_blank" rel="noopener noreferrer" class="reflect-btn" aria-label="Open reflection form in new tab">Reflection</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -260,7 +235,7 @@
           <h3>📍 Venue: Africa Skills College, George</h3>
           <h3>👥 Expected: 600+ Learners (Grades 3-12)</h3>
         </div>
-        <div class="hero-note">All registrations are now closed. Schools, teachers, learners, and guests are confirmed.</div> <!-- NEW -->
+        <div class="hero-note">All registrations are now closed. Schools, teachers, learners, and guests are confirmed.</div>
         <a href="#focus" class="cta-button">Explore Event</a>
       </div>
       <div class="hero-visual">
@@ -345,7 +320,7 @@
     </div>
   </section>
 
-  <!-- Student Challenges (RESTORED) -->
+  <!-- Student Challenges -->
   <section class="challenges" id="challenges">
     <div class="container">
       <h2>Student Competition Challenges</h2>
@@ -471,7 +446,7 @@
     </div>
   </section>
 
-  <!-- Career Expo (RESTORED) -->
+  <!-- Career Expo -->
   <section class="career-expo" id="expo">
     <div class="container">
       <h2>Career & Innovation Expo</h2>
@@ -544,53 +519,52 @@
           </div>
         </div>
 
-<!-- Educational Publishers -->
-<div class="exhibitor-category">
-  <h3>📚 Educational Publishers</h3>
-  <div class="exhibitors-grid">
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">Cambridge University Press and Assessments</div>
-      <a href="https://www.cambridge.org" class="exhibitor-website" target="_blank" rel="noreferrer">www.cambridge.org</a>
-    </div>
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">Maskew Miller Learning</div>
-      <a href="https://www.mml.co.za" class="exhibitor-website" target="_blank" rel="noreferrer">www.mml.co.za</a>
-    </div>
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">Book Tourism Publishing House</div>
-      <a href="https://www.booktourism.co.za" class="exhibitor-website" target="_blank" rel="noreferrer">www.booktourism.co.za</a>
-    </div>
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">Shuter and Shooter Publishers</div>
-      <a href="https://www.shuters.co.za/" class="exhibitor-website" target="_blank" rel="noopener">www.shuters.co.za</a>
-    </div>
-  </div> <!-- end .exhibitors-grid -->
-</div> <!-- end .exhibitor-category -->
+        <!-- Educational Publishers -->
+        <div class="exhibitor-category">
+          <h3>📚 Educational Publishers</h3>
+          <div class="exhibitors-grid">
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">Cambridge University Press and Assessments</div>
+              <a href="https://www.cambridge.org" class="exhibitor-website" target="_blank" rel="noreferrer">www.cambridge.org</a>
+            </div>
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">Maskew Miller Learning</div>
+              <a href="https://www.mml.co.za" class="exhibitor-website" target="_blank" rel="noreferrer">www.mml.co.za</a>
+            </div>
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">Book Tourism Publishing House</div>
+              <a href="https://www.booktourism.co.za" class="exhibitor-website" target="_blank" rel="noreferrer">www.booktourism.co.za</a>
+            </div>
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">Shuter and Shooter Publishers</div>
+              <a href="https://www.shuters.co.za/" class="exhibitor-website" target="_blank" rel="noopener">www.shuters.co.za</a>
+            </div>
+          </div>
+        </div>
 
-<!-- NGOs & Development Organizations -->
-<div class="exhibitor-category">
-  <h3>🤝 NGOs & Development Organizations</h3>
-  <div class="exhibitors-grid">
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">WeThinkCode_</div>
-      <a href="https://www.wethinkcode.co.za/" class="exhibitor-website" target="_blank" rel="noreferrer">www.wethinkcode.co.za</a>
-    </div>
-    <div class="exhibitor-card">
-      <div class="exhibitor-name">Tangible Africa</div>
-      <a href="https://tangible.levafoundation.org/" class="exhibitor-website" target="_blank" rel="noreferrer">tangible.levafoundation.org</a>
-    </div>
-  </div> <!-- end .exhibitors-grid -->
-</div> <!-- end .exhibitor-category -->
+        <!-- NGOs & Development Organizations -->
+        <div class="exhibitor-category">
+          <h3>🤝 NGOs & Development Organizations</h3>
+          <div class="exhibitors-grid">
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">WeThinkCode_</div>
+              <a href="https://www.wethinkcode.co.za/" class="exhibitor-website" target="_blank" rel="noreferrer">www.wethinkcode.co.za</a>
+            </div>
+            <div class="exhibitor-card">
+              <div class="exhibitor-name">Tangible Africa</div>
+              <a href="https://tangible.levafoundation.org/" class="exhibitor-website" target="_blank" rel="noreferrer">tangible.levafoundation.org</a>
+            </div>
+          </div>
+        </div>
 
-      <div class="expo-cta">
-        <p style="text-align:center; font-size:1.1rem; margin-top:30px;">
-          Visit the expo area to connect with these organizations and explore career opportunities in technology and innovation!
-        </p>
+        <div class="expo-cta">
+          <p style="text-align:center; font-size:1.1rem; margin-top:30px;">Visit the expo area to connect with these organizations and explore career opportunities in technology and innovation!</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Partners (fixed darker logo plates + standardized filenames) -->
+  <!-- Partners -->
   <section class="partners-section" id="partners">
     <div class="container">
       <h2>Organisers and Partners</h2>
@@ -598,57 +572,37 @@
 
       <div class="partners-grid">
         <a href="https://wcedonline.westerncape.gov.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/wced.png" alt="Western Cape Education Department Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/wced.png" alt="Western Cape Education Department Logo"/></div>
           <h3>Western Cape Education Department</h3>
           <p>Primary Organiser & Education Authority</p>
         </a>
-
         <a href="https://africaskills.co.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/africa-skills.png" alt="Africa Skills College Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/africa-skills.png" alt="Africa Skills College Logo"/></div>
           <h3>Africa Skills College</h3>
           <p>Host Venue & Training Partner</p>
         </a>
-
         <a href="https://www.westerncape.gov.za/dept/edat" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/dedat.png" alt="Department of Economic Development and Tourism Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/dedat.png" alt="Department of Economic Development and Tourism Logo"/></div>
           <h3>Department of Economic Development and Tourism</h3>
           <p>Western Cape Government</p>
         </a>
-
         <a href="https://sakhikamva.org.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/sakhikamva.png" alt="Sakhikamva Foundation Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/sakhikamva.png" alt="Sakhikamva Foundation Logo"/></div>
           <h3>Sakhikamva Foundation</h3>
           <p>Community Development</p>
         </a>
-
         <a href="https://www.ctsc.org.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/ctsc.png" alt="Cape Town Science Centre Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/ctsc.png" alt="Cape Town Science Centre Logo"/></div>
           <h3>Cape Town Science Centre</h3>
           <p>STEM Education & Innovation</p>
         </a>
-
         <a href="https://edunova.co.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/edunova.png" alt="EduNova Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/edunova.png" alt="EduNova Logo"/></div>
           <h3>EduNova</h3>
           <p>Educational Innovation</p>
         </a>
-
         <a href="https://suff.org.za/" class="partner-card" target="_blank" rel="noreferrer">
-          <div class="partner-logo">
-            <img src="images/suff.png" alt="SUFF Academy Logo"/>
-          </div>
+          <div class="partner-logo"><img src="images/suff.png" alt="SUFF Academy Logo"/></div>
           <h3>SUFF Academy</h3>
           <p>Developing Next Generation Innovators</p>
         </a>
@@ -663,10 +617,14 @@
       <p>Africa Skills College</p>
       <p>George, Western Cape</p>
       <p>South Africa</p>
+      <p style="margin-top:14px;">
+        <!-- Secondary Reflection button in footer (optional/extra access) -->
+        <a href="https://bit.ly/3JIei8b" target="_blank" rel="noopener noreferrer" class="reflect-btn" style="display:inline-block; padding:.55rem .9rem; border-radius:999px; color:#fff; text-decoration:none;">📝 Submit Reflection</a>
+      </p>
     </div>
-  <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #334155;">
-    <p>&copy; 2025 EdenX: Future Ready Festival. All rights reserved.</p>
-  </div>
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #334155;">
+      <p>&copy; 2025 EdenX: Future Ready Festival. All rights reserved.</p>
+    </div>
   </footer>
 
   <script>
@@ -690,7 +648,7 @@
     }
     setInterval(updateCountdown, 1000); updateCountdown();
 
-    // Smooth scrolling for anchor links (kept)
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const target = document.querySelector(a.getAttribute('href'));
@@ -698,7 +656,7 @@
       });
     });
 
-    // Hover effects (kept)
+    // Hover effects
     document.querySelectorAll('.challenge-card').forEach(card=>{
       card.addEventListener('mouseenter',()=>{card.style.background='linear-gradient(135deg,#ffffff 0%, #f1f5f9 100%)';});
       card.addEventListener('mouseleave',()=>{card.style.background='#fff';});
