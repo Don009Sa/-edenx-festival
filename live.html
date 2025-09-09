@@ -11,12 +11,12 @@
     .header{background:rgba(0,0,0,.2);backdrop-filter:blur(10px);padding:1rem;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.1)}
     .header-content{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
     .logo{font-size:1.5rem;font-weight:700;color:var(--brand-a)}
-    /* NEW: group actions on the right */
+    /* group actions on the right */
     .header-actions{display:flex;align-items:center;gap:.75rem}
     .live-indicator{display:flex;align-items:center;gap:.5rem;background:var(--danger);padding:.5rem 1rem;border-radius:20px;font-size:.9rem;font-weight:700}
     .live-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-    /* NEW: main site button */
+    /* main site button */
     .main-link{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;font-weight:800;color:#0b102a;background:linear-gradient(45deg,var(--brand-a),var(--brand-b));padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(255,255,255,.25)}
     .main-link:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
@@ -83,10 +83,8 @@
     <div class="header-content">
       <div class="logo">EdenX Live Dashboard</div>
       <div class="header-actions">
-        <!-- NEW: Back to main website -->
-        <a class="main-link" href="/" aria-label="Go to EdenX main website">
-          ↩ Back to Main Site
-        </a>
+        <!-- Back to main website (works on GitHub Pages project sites) -->
+        <a class="main-link" href="./" aria-label="Go to EdenX main website">↩ Back to Main Site</a>
         <div class="live-indicator"><div class="live-dot"></div><span id="liveStatus">EVENT STARTS SOON</span></div>
       </div>
     </div>
@@ -229,7 +227,8 @@
         const timestamp=fmtTimestamp(c[0]);
         const type=(c[1]?.v||'general').toLowerCase();
         const location=c[2]?.v||'';
-        const message=c[3]?.v||'';
+        the_message=c[3]?.v||'';
+        const message = the_message;
         const priority=(c[4]?.v||'normal').toLowerCase();
         if(!message) return;
         const div=document.createElement('div');
